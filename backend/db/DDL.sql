@@ -1,27 +1,51 @@
--- Para la tabla usuarios
-INSERT INTO usuarios (id, email, pass, es_admin)
-VALUES
-    (DEFAULT, 'usuario1@example.com', '123456', true),
-    (DEFAULT, 'usuario2@example.com', '123456', true);
 
--- Insertar algunos datos en la tabla pedidos
-INSERT INTO pedidos (id_usuario, estado, direccion_envio)
-VALUES
-    ('3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 'En proceso', 'santiago'),
-    ('3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 'Entregado', 'santiago');
+CREATE DATABASE itdojo;
+\c itdojo;
 
--- Para la tabla inventario
-INSERT INTO inventario (id, nombre, categoria, envio, precio, stock, id_usuario, id_pedido)
-VALUES
-    (DEFAULT, 'Silla Reclinable', 'sillas', 'santiago', 50000 , 2, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 1),
-    (DEFAULT, 'Mause Pad', 'mausepad', 'santiago', 15000 , 10, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 2),
-    (DEFAULT, 'Escritorio', 'escritorio', 'santiago', 10000 , 2, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 2);
+CREATE TABLE usuarios (
+    id       UUID DEFAULT uuid_generate_v4() NOT NULL,
+    email    VARCHAR(100) NOT NULL UNIQUE,
+    pass     VARCHAR(255) NOT NULL,
+    es_admin BOOLEAN DEFAULT false,
+    PRIMARY KEY(id)
+);
 
--- Insertar registros en la tabla de imágenes
-INSERT INTO imagenes_producto (id_inventario, url)
-VALUES
-    ((SELECT id FROM inventario WHERE nombre = 'silla' limit 1), 'src/assets/img/silla1.jpg');
+/*tabla para las pedidos*/
+CREATE TABLE pedidos (
+    id              SERIAL,
+    id_usuario      UUID REFERENCES usuarios(id),
+    fecha           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado          VARCHAR(50),
+    direccion_envio VARCHAR(255),
+    PRIMARY KEY(id)
+);
 
-INSERT INTO imagenes_producto (id_inventario, url)
-VALUES
-    ((SELECT id FROM inventario WHERE nombre = 'Escritorio'), 'src/assets/img/escritorio-gamer.jpg');
+/*tabla de inventario*/
+CREATE TABLE inventario (
+    id         SERIAL,
+    nombre     VARCHAR(100),
+    categoria  VARCHAR(100),
+    envio      VARCHAR(150),
+    precio     INT,
+    stock      INT,
+    id_usuario UUID REFERENCES usuarios(id),
+    id_pedido  SERIAL REFERENCES pedidos(id),
+    PRIMARY KEY(id)
+);
+
+/*tabla para los favoritos*/
+CREATE TABLE favoritos (
+    id              SERIAL,
+    id_usuario      UUID REFERENCES usuarios(id),
+    id_inventario   SERIAL REFERENCES inventario(id),
+    fecha_agregado  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+);
+
+/*tabla para guardar la url de las imagenes*/
+CREATE TABLE imagenes_producto (
+    id            SERIAL,
+    id_inventario SERIAL REFERENCES inventario(id),
+    url           VARCHAR(255),
+    PRIMARY KEY(id)
+);
