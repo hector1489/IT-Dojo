@@ -10,9 +10,9 @@ class UserModel {
   async getUsers(): Promise<any[]> {
     try {
       const result: QueryResult = await this.pool.query('SELECT * FROM usuarios')
-      return result.rows;
+      return result.rows
     } catch (error) {
-      console.error(error);
+      console.error(error)
       throw new Error('Error al obtener usuarios')
     }
   }
@@ -24,6 +24,16 @@ class UserModel {
     } catch (error) {
       console.error(error)
       throw new Error('Error al obtener usuario por ID')
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<any> {
+    try {
+      const result: QueryResult = await this.pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
+      return result.rows[0];
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error al obtener usuario por correo electrónico');
     }
   }
 
@@ -61,8 +71,6 @@ class UserModel {
       throw new Error('Error al eliminar usuario')
     }
   }
-
-
 }
 
 export default UserModel
