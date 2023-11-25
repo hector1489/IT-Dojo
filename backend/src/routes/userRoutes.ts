@@ -78,28 +78,27 @@ const userRoutes = (userModel: UserModel) => {
     }
   })
 
-  // Ruta para iniciar sesión
-  router.post('/login', async (req, res) => {
-    const { email, pass } = req.body
-    console.log(req.body)
+// Ruta para iniciar sesión
+router.post('/login', async (req, res) => {
+  const { email, pass } = req.body
+  console.log('Solicitud de inicio de sesión recibida:', req.body)
 
-    try {
-      const user = await usersController.getUserByEmail(email)
-      if (!user) {
-        return res.status(401).json({ error: 'Credenciales inválidas' })
-      }
-      const isPasswordValid = await comparePassword(pass, user.pass)
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: 'Credenciales inválidas' })
-      }
-      const token = signToken({ userId: user.id, email: user.email })
-      res.json({ token, user })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ error: 'Error al iniciar sesión' })
+  try {
+    const user = await usersController.getUserByEmail(email)
+    if (!user) {
+      return res.status(401).json({ error: 'Credenciales inválidas' })
     }
-  })
-
+    const isPasswordValid = await comparePassword(pass, user.pass)
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Credenciales inválidas' })
+    }
+    const token = signToken({ userId: user.id, email: user.email })
+    res.json({ token, user })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al iniciar sesión' })
+  }
+})
   return router
 }
 
