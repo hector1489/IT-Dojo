@@ -10,7 +10,7 @@ const userRoutes = (userModel: UserModel) => {
   const router = express.Router()
 
   // Ruta para obtener todos los usuarios
-  router.get('/users', async (_, res) => {
+  router.get('/', async (_, res) => {
     try {
       const users = await usersController.getUsers()
       res.json(users)
@@ -49,6 +49,28 @@ const userRoutes = (userModel: UserModel) => {
     }
   })
 
+  // Ruta para iniciar sesión
+  router.post('/login', async (req, res) => {
+    const { email, pass } = req.body
+    console.log('Solicitud de inicio de sesión recibida:', req.body)
+
+    try {
+      const user = await usersController.getUserByEmail(email)
+      if (!user) {
+        return res.status(401).json({ error: 'Credenciales inválidas' })
+      }
+      const isPasswordValid = await comparePassword(pass, user.pass)
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: 'Credenciales inválidas' })
+      }
+      const token = signToken({ userId: user.id, email: user.email })
+      res.json({ token, user })
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al iniciar sesión' })
+    }
+  })
+
   // Ruta para actualizar un usuario
   router.put('/:id', async (req, res) => {
     const userId = req.params.id
@@ -78,27 +100,6 @@ const userRoutes = (userModel: UserModel) => {
     }
   })
 
-  // Ruta para iniciar sesión
-  router.post('/login', async (req, res) => {
-    const { email, pass } = req.body
-    console.log('Solicitud de inicio de sesión recibida:', req.body)
-
-    try {
-      const user = await usersController.getUserByEmail(email)
-      if (!user) {
-        return res.status(401).json({ error: 'Credenciales inválidas' })
-      }
-      const isPasswordValid = await comparePassword(pass, user.pass)
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: 'Credenciales inválidas' })
-      }
-      const token = signToken({ userId: user.id, email: user.email })
-      res.json({ token, user })
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al iniciar sesión' })
-    }
-  })
   return router
 }
 
