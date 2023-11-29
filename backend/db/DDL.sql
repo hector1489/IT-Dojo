@@ -1,51 +1,50 @@
+CREATE DATABASE electrobase;
+\c electrobase;
 
-CREATE DATABASE itdojo;
-\c itdojo;
-
-CREATE TABLE usuarios (
+CREATE TABLE users (
     id       UUID DEFAULT uuid_generate_v4() NOT NULL,
-    email    VARCHAR(100) NOT NULL UNIQUE,
-    pass     VARCHAR(255) NOT NULL,
-    es_admin BOOLEAN DEFAULT false,
+    email         VARCHAR(100) NOT NULL UNIQUE,
+    pass          VARCHAR(255) NOT NULL,
+    is_admin      BOOLEAN DEFAULT false,
     PRIMARY KEY(id)
 );
 
-/*tabla para las pedidos*/
-CREATE TABLE pedidos (
+/* Table for orders */
+CREATE TABLE orders (
+    id               SERIAL,
+    user_id          UUID REFERENCES users(id),
+    date             TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status           VARCHAR(50),
+    shipping_address VARCHAR(255),
+    PRIMARY KEY(id)
+);
+
+/* Inventory table */
+CREATE TABLE inventory (
+    id        SERIAL,
+    name      VARCHAR(100),
+    category  VARCHAR(100),
+    shipping  VARCHAR(150),
+    price     INT,
+    stock     INT,
+    user_id   UUID REFERENCES users(id),
+    order_id  SERIAL REFERENCES orders(id),
+    PRIMARY KEY(id)
+);
+
+/* Table for favorites */
+CREATE TABLE favorites (
     id              SERIAL,
-    id_usuario      UUID REFERENCES usuarios(id),
-    fecha           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado          VARCHAR(50),
-    direccion_envio VARCHAR(255),
+    user_id    UUID REFERENCES users(id),
+    inventory_id    SERIAL REFERENCES inventory(id),
+    added_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
 
-/*tabla de inventario*/
-CREATE TABLE inventario (
-    id         SERIAL,
-    nombre     VARCHAR(100),
-    categoria  VARCHAR(100),
-    envio      VARCHAR(150),
-    precio     INT,
-    stock      INT,
-    id_usuario UUID REFERENCES usuarios(id),
-    id_pedido  SERIAL REFERENCES pedidos(id),
-    PRIMARY KEY(id)
-);
-
-/*tabla para los favoritos*/
-CREATE TABLE favoritos (
-    id              SERIAL,
-    id_usuario      UUID REFERENCES usuarios(id),
-    id_inventario   SERIAL REFERENCES inventario(id),
-    fecha_agregado  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(id)
-);
-
-/*tabla para guardar la url de las imagenes*/
-CREATE TABLE imagenes_producto (
+/* Table for storing image URLs */
+CREATE TABLE image_product (
     id            SERIAL,
-    id_inventario SERIAL REFERENCES inventario(id),
+    inventory_id SERIAL REFERENCES inventory(id),
     url           VARCHAR(255),
     PRIMARY KEY(id)
 );

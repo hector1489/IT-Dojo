@@ -9,7 +9,7 @@ class FavoriteModel {
 
   async getFavorites(): Promise<any[]> {
     try {
-      const result: QueryResult = await this.pool.query('SELECT * FROM favoritos')
+      const result: QueryResult = await this.pool.query('SELECT * FROM favorites;')
       return result.rows
     } catch (error) {
       console.error(error)
@@ -19,7 +19,7 @@ class FavoriteModel {
 
   async getFavoriteById(favoriteId: string): Promise<any> {
     try {
-      const result: QueryResult = await this.pool.query('SELECT * FROM favoritos WHERE id = $1', [favoriteId])
+      const result: QueryResult = await this.pool.query('SELECT * FROM favorites WHERE id = $1;', [favoriteId])
       return result.rows[0]
     } catch (error) {
       console.error(error)
@@ -30,7 +30,7 @@ class FavoriteModel {
   async createFavorite(userId: string, inventoryId: number): Promise<any> {
     try {
       const result: QueryResult = await this.pool.query(
-        'INSERT INTO favoritos (id_usuario, id_inventario) VALUES ($1, $2) RETURNING *',
+        'INSERT INTO favorites (user_id, inventory_id) VALUES ($1, $2) RETURNING *;',
         [userId, inventoryId]
       )
       return result.rows[0]
@@ -42,7 +42,7 @@ class FavoriteModel {
 
   async deleteFavorite(favoriteId: string): Promise<void> {
     try {
-      await this.pool.query('DELETE FROM favoritos WHERE id = $1', [favoriteId])
+      await this.pool.query('DELETE FROM favorites WHERE id = $1;', [favoriteId])
     } catch (error) {
       console.error(error)
       throw new Error('Error al eliminar favorito')

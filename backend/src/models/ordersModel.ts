@@ -9,7 +9,7 @@ class OrdersModel {
 
   async getOrders(): Promise<any[]> {
     try {
-      const result: QueryResult = await this.pool.query('SELECT * FROM pedidos')
+      const result: QueryResult = await this.pool.query('SELECT * FROM orders;')
       return result.rows
     } catch (error) {
       console.error(error)
@@ -19,7 +19,7 @@ class OrdersModel {
 
   async getOrderById(orderId: number): Promise<any> {
     try {
-      const result: QueryResult = await this.pool.query('SELECT * FROM pedidos WHERE id = $1', [orderId])
+      const result: QueryResult = await this.pool.query('SELECT * FROM orders WHERE id = $1;', [orderId])
       return result.rows[0]
     } catch (error) {
       console.error(error)
@@ -30,7 +30,7 @@ class OrdersModel {
   async createOrder(userId: string, estado: string, direccion_envio: string): Promise<any> {
     try {
       const result: QueryResult = await this.pool.query(
-        'INSERT INTO pedidos (id_usuario, estado, direccion_envio) VALUES ($1, $2, $3) RETURNING *',
+        'INSERT INTO orders (user_id, status, shipping_address) VALUES ($1, $2, $3) RETURNING *;',
         [userId, estado, direccion_envio]
       );
       return result.rows[0]
@@ -43,7 +43,7 @@ class OrdersModel {
   async updateOrder(orderId: number, estado: string, direccion_envio: string): Promise<any> {
     try {
       const result: QueryResult = await this.pool.query(
-        'UPDATE pedidos SET estado = $2, direccion_envio = $3 WHERE id = $1 RETURNING *',
+        'UPDATE orders SET status = $2, shipping_address = $3 WHERE id = $1 RETURNING *',
         [orderId, estado, direccion_envio]
       );
       return result.rows[0]
@@ -55,7 +55,7 @@ class OrdersModel {
 
   async deleteOrder(orderId: number): Promise<void> {
     try {
-      await this.pool.query('DELETE FROM pedidos WHERE id = $1', [orderId])
+      await this.pool.query('DELETE FROM orders WHERE id = $1', [orderId])
     } catch (error) {
       console.error(error)
       throw new Error('Error al eliminar pedido')

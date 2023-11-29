@@ -1,5 +1,5 @@
 -- Para la tabla usuarios
-INSERT INTO usuarios (id, email, pass, es_admin)
+INSERT INTO users (id, email, pass, is_admin)
 VALUES
     (DEFAULT, 'usuario1@example.com', '123456', true),
     (DEFAULT, 'usuario2@example.com', '123456', true);

@@ -16,7 +16,7 @@ class UserModel {
 
   async getUsers(): Promise<User[]> {
     try {
-      const result: QueryResult<User> = await this.pool.query('SELECT * FROM usuarios')
+      const result: QueryResult<User> = await this.pool.query('SELECT * FROM users;')
       return result.rows
     } catch (error) {
       console.error('Error al obtener usuarios:', error)
@@ -26,7 +26,7 @@ class UserModel {
 
   async getUserById(userId: string): Promise<User | undefined> {
     try {
-      const result: QueryResult<User> = await this.pool.query('SELECT * FROM usuarios WHERE id = $1', [userId])
+      const result: QueryResult<User> = await this.pool.query('SELECT * FROM users WHERE id = $1;', [userId])
       return result.rows[0]
     } catch (error) {
       console.error('Error al obtener usuario por ID:', error)
@@ -36,7 +36,7 @@ class UserModel {
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     try {
-      const result: QueryResult<User> = await this.pool.query('SELECT * FROM usuarios WHERE email = $1', [email])
+      const result: QueryResult<User> = await this.pool.query('SELECT * FROM users WHERE email = $1;', [email])
       return result.rows[0]
     } catch (error) {
       console.error('Error al obtener usuario por correo electrónico:', error)
@@ -47,7 +47,7 @@ class UserModel {
   async createUser(email: string, pass: string, es_admin: boolean): Promise<User> {
     try {
       const result: QueryResult<User> = await this.pool.query(
-        'INSERT INTO usuarios (email, pass, es_admin) VALUES ($1, $2, $3) RETURNING *',
+        'INSERT INTO users (email, pass, is_admin) VALUES ($1, $2, $3) RETURNING *;',
         [email, pass, es_admin]
       )
       return result.rows[0]
@@ -60,7 +60,7 @@ class UserModel {
   async updateUser(userId: string, email: string, pass: string, es_admin: boolean): Promise<User> {
     try {
       const result: QueryResult<User> = await this.pool.query(
-        'UPDATE usuarios SET email = $2, pass = $3, es_admin = $4 WHERE id = $1 RETURNING *',
+        'UPDATE users SET email = $2, pass = $3, is_admin = $4 WHERE id = $1 RETURNING *;',
         [userId, email, pass, es_admin]
       )
       return result.rows[0]
@@ -72,7 +72,7 @@ class UserModel {
 
   async deleteUser(userId: string): Promise<void> {
     try {
-      await this.pool.query('DELETE FROM usuarios WHERE id = $1', [userId])
+      await this.pool.query('DELETE FROM users WHERE id = $1;', [userId])
     } catch (error) {
       console.error('Error al eliminar usuario:', error)
       throw new Error('Error al eliminar usuario')
