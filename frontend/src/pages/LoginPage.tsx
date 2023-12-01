@@ -1,51 +1,59 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { userService } from '../services/userServices';
+import { useAuth } from '../context/context';
 import { isValidEmail } from '../utils/validationUtils';
 import UserAccount from '../components/UserAccount/UserAccount';
 import SignupAccount from '../components/SignupAccount/SignupAccount';
 
+interface LoginPageState {
+  username: string;
+  email: string;
+  error: string;
+}
+
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [state, setState] = useState<LoginPageState>({
+    username: '',
+    email: '',
+    error: '',
+  });
+
   const navigate = useNavigate();
+  const { loginUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isValidEmail(email)) {
-      setError('Invalid email format');
+    if (!isValidEmail(state.email)) {
+      setState((prevState) => ({ ...prevState, error: 'Invalid email format' }));
       return;
     }
 
     try {
-      await userService.loginUser(username, email);
+      loginUser(state.username, state.email);
       navigate('/user');
     } catch (error) {
-      setError('Error al iniciar sesión');
+      setState((prevState) => ({ ...prevState, error: 'Error al iniciar sesión' }));
     }
   };
 
   return (
-<div className='container mt-4'>
+    <div className='container mt-4'>
       <div className='row justify-content-center'>
         <div className='col-md-6'>
-          <UserAccount username={username} email={email} />
+          <UserAccount username={state.username} email={state.email} />
         </div>
         <div className='col-md-6'>
-          <SignupAccount username={username} email={email} />
+          <SignupAccount username={state.username} email={state.email} />
         </div>
       </div>
 
       <div className='row mt-4'>
         <div className='col-md-12 text-center'>
-          <Link to="/">Go back to Home</Link>
+          <Link to="/">Volver a la página de inicio</Link>
         </div>
       </div>
     </div>
-
-
   );
 };
 

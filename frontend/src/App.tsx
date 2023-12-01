@@ -5,6 +5,16 @@ import LoginPage from "./pages/LoginPage";
 import ProductPage from "./pages/ProductPage";
 import UserPage from "./pages/UserPage";
 
+import { URLBASE, ENDPOINT } from './config/constans';
+
+//retorno rutas
+console.log(URLBASE);
+console.log(ENDPOINT.login);
+console.log(ENDPOINT.register);
+console.log(ENDPOINT.users);
+console.log(ENDPOINT.inventory);
+
+
 export function App() {
 
 

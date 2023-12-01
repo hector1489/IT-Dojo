@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const Key = process.env.JWT_SECRET;
-console.log(Key);
 
 export function signToken(data: any): string {
   if (!Key) {
@@ -14,25 +13,18 @@ export function signToken(data: any): string {
   return jwt.sign(data, Key, { expiresIn: '10m' });
 }
 
-export function verifyToken(token: string): any {
+export function jwtVerify(token: string): any {
   if (!Key) {
     throw new Error('JWT_SECRET no está definido o es nulo');
   }
 
-  try {
-    const decoded = jwt.verify(token, Key);
+  return jwt.verify(token, Key, (err, decoded) => {
+    if (err) {
+      throw new Error('Token inválido.');
+    }
     return decoded;
-  } catch (error) {
-    throw new Error('Error al verificar el JWT: ');
-  }
+  });
 }
 
 const token = signToken({ userId: 123 });
-console.log(token);
 
-try {
-  const tokenDecodificado = verifyToken(token);
-  console.log(tokenDecodificado);
-} catch (error) {
-  console.error(error);
-}

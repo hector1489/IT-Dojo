@@ -1,4 +1,4 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 
 interface User {
   id: string;
@@ -44,11 +44,11 @@ class UserModel {
     }
   }
 
-  async createUser(email: string, pass: string, es_admin: boolean) {
+  async createUser(email: string, pass: string, is_admin: boolean) {
     try {
       const result= await this.pool.query(
         'INSERT INTO users (email, pass, is_admin) VALUES ($1, $2, $3) RETURNING *;',
-        [email, pass, es_admin]
+        [email, pass, is_admin]
       );
       return result.rows[0];
     } catch (error) {
