@@ -9,26 +9,14 @@ const UserPage: React.FC = () => {
   if (!currentUser) {
 
     return (
-      <Navigate to="/" />
+      <Navigate to="/login" />
     )
   }
-
-  const handleLogout = () => {
-
-    userService.logoutUser();
-
-  };
 
   return (
     <div>
       <h2>User Page</h2>
-      <p>
-        <strong>Username:</strong> {currentUser.username}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-      <button onClick={handleLogout}>Logout</button>
+      
       <br />
       <Link to="/">Go to Home</Link>
     </div>

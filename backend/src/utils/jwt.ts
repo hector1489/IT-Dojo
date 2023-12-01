@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const Key = process.env.JWT_SECRET;
-console.log('Valor de JWT_SECRET:', Key);
+console.log(Key);
 
 export function signToken(data: any): string {
   if (!Key) {
@@ -28,11 +28,11 @@ export function verifyToken(token: string): any {
 }
 
 const token = signToken({ userId: 123 });
-console.log('Token generado:', token);
+console.log(token);
 
 try {
   const tokenDecodificado = verifyToken(token);
-  console.log('Token decodificado:', tokenDecodificado);
+  console.log(tokenDecodificado);
 } catch (error) {
   console.error(error);
 }

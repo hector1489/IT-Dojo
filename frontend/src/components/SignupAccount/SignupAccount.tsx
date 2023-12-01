@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import './userAccount.css';
+import './SignupAccount.css';
 import { Form, Button } from 'react-bootstrap';
 
-interface UserAccountProps {
+interface SignupAccountProps {
   username: string;
   email: string;
 }
 
-const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
+const SignupAccount: React.FC<SignupAccountProps> = ({ username, email }) => {
   const [user, setUser] = useState({
     email: '',
     pass: '',
@@ -24,10 +24,10 @@ const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
   };
 
   return (
-    <div className="box-login col-md-6">
+    <div className="box-signup col-md-6">
       <Form onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label className="fw-bold text-uppercase">Login</Form.Label>
+          <Form.Label className="fw-bold text-uppercase">Signup</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter your email"
@@ -50,15 +50,22 @@ const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
             onChange={handleUserChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Remember me" />
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Repeat password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Repeat password"
+            name="pass"
+            value={user.pass}
+            onChange={handleUserChange}
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Login
+          Signup
         </Button>
       </Form>
     </div>
   );
 };
 
-export default UserAccount;
+export default SignupAccount;

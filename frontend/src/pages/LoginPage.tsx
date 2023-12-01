@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { userService } from '../services/userServices';
 import { isValidEmail } from '../utils/validationUtils';
+import UserAccount from '../components/UserAccount/UserAccount';
+import SignupAccount from '../components/SignupAccount/SignupAccount';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +20,7 @@ const LoginPage: React.FC = () => {
     }
 
     try {
-      await userService.loginUser( username, email );
+      await userService.loginUser(username, email);
       navigate('/user');
     } catch (error) {
       setError('Error al iniciar sesión');
@@ -26,25 +28,24 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-      </form>
-      <br />
-      <Link to="/">Go back to Home</Link>
+<div className='container mt-4'>
+      <div className='row justify-content-center'>
+        <div className='col-md-6'>
+          <UserAccount username={username} email={email} />
+        </div>
+        <div className='col-md-6'>
+          <SignupAccount username={username} email={email} />
+        </div>
+      </div>
+
+      <div className='row mt-4'>
+        <div className='col-md-12 text-center'>
+          <Link to="/">Go back to Home</Link>
+        </div>
+      </div>
     </div>
+
+
   );
 };
 
