@@ -14,9 +14,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       <p>
         <strong>Price:</strong> ${product.price}
       </p>
-      <p>
-        <strong>Description:</strong> {product.description}
-      </p>
     </div>
   );
 };

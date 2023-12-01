@@ -1,6 +1,6 @@
 import UserModel from '../models/userModel'
 import { signToken } from '../utils/jwt'
-import { hashPassword, comparePassword } from '../utils/bcrypt'
+import * as bcrypt from '../utils/bcrypt'
 
 class UsersController {
   private userModel: UserModel
@@ -33,10 +33,10 @@ class UsersController {
     }
   }
 
-  async createUser(email: string, pass: string, es_admin: boolean) {
+  async createUser(email: string, pass: string, is_admin: boolean) {
     try {
-      const hashedPassword = await hashPassword(pass)
-      return await this.userModel.createUser(email, hashedPassword, es_admin)
+      const hashedPassword = await bcrypt.hashPassword(pass)
+      return await this.userModel.createUser(email, hashedPassword, is_admin)
     } catch (error) {
       throw new Error('Error al crear usuario desde el controlador')
     }
@@ -44,30 +44,25 @@ class UsersController {
 
   async login(email: string, pass: string) {
     try {
-      const user = await this.userModel.getUserByEmail(email)
-
+      const user = await this.userModel.getUserByEmail(email);
       if (!user) {
-        throw new Error('Credenciales inválidas')
+        throw new Error('Usuario no encontrado');
       }
-
-      const isPasswordValid = await comparePassword(pass, user.pass)
-
+      const isPasswordValid = await bcrypt.comparePassword(pass, user.pass);
       if (!isPasswordValid) {
-        throw new Error('Credenciales inválidas')
+        throw new Error('Contraseña incorrecta');
       }
-
-      const token = signToken({ userId: user.id, email: user.email })
-
-      return { token, user }
+      const token = signToken({ userId: user.id, email: user.email });
+      return { token, user };
     } catch (error) {
-      throw new Error('Error al autenticar usuario desde el controlador')
+      throw new Error('Error al autenticar usuario desde el controlador: ');
     }
   }
 
-  async updateUser(userId: string, email: string, pass: string, es_admin: boolean) {
+  async updateUser(userId: string, email: string, pass: string, is_admin: boolean) {
     try {
-      const hashedPassword = await hashPassword(pass)
-      return await this.userModel.updateUser(userId, email, hashedPassword, es_admin)
+      const hashedPassword = await bcrypt.hashPassword(pass)
+      return await this.userModel.updateUser(userId, email, hashedPassword, is_admin)
     } catch (error) {
       throw new Error('Error al actualizar usuario desde el controlador')
     }

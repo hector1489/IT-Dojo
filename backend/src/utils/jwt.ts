@@ -1,26 +1,38 @@
-import * as jwt from 'jsonwebtoken'
-import * as dotenv from 'dotenv'
+import * as jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const secretKey = process.env.JWT_SECRET
-
-if (!secretKey) {
-  throw new Error('JWT_SECRET not found in environment variables')
-}
+const Key = process.env.JWT_SECRET;
+console.log('Valor de JWT_SECRET:', Key);
 
 export function signToken(data: any): string {
-  if (!secretKey) {
-    throw new Error('JWT_SECRET is undefined or null')
+  if (!Key) {
+    throw new Error('JWT_SECRET no está definido o es nulo');
   }
 
-  return jwt.sign(data, secretKey, { expiresIn: '10m' })
+  return jwt.sign(data, Key, { expiresIn: '10m' });
 }
 
 export function verifyToken(token: string): any {
-  if (!secretKey) {
-    throw new Error('JWT_SECRET is undefined or null')
+  if (!Key) {
+    throw new Error('JWT_SECRET no está definido o es nulo');
   }
 
-  return jwt.verify(token, secretKey)
+  try {
+    const decoded = jwt.verify(token, Key);
+    return decoded;
+  } catch (error) {
+    throw new Error('Error al verificar el JWT: ');
+  }
+}
+
+const token = signToken({ userId: 123 });
+console.log('Token generado:', token);
+
+try {
+  const tokenDecodificado = verifyToken(token);
+  console.log('Token decodificado:', tokenDecodificado);
+} catch (error) {
+  console.error(error);
 }

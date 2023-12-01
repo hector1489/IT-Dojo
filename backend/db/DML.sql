@@ -1,27 +1,28 @@
 -- Para la tabla usuarios
-INSERT INTO users (id, email, pass, is_admin)
+INSERT INTO users (email, pass, is_admin)
 VALUES
-    (DEFAULT, 'usuario1@example.com', '123456', true),
-    (DEFAULT, 'usuario2@example.com', '123456', true);
+    ('usuario2@example.com', 'contraseña123', false);
 
 -- Insertar algunos datos en la tabla pedidos
-INSERT INTO pedidos (id_usuario, estado, direccion_envio)
+INSERT INTO orders (user_id, status, shipping_address)
 VALUES
-    ('3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 'En proceso', 'santiago'),
-    ('3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 'Entregado', 'santiago');
+    ('fa65c69d-f5b7-4f03-b188-a12b006c0bf7', 'Pendiente', '123 Calle Principal');
 
 -- Para la tabla inventario
-INSERT INTO inventario (id, nombre, categoria, envio, precio, stock, id_usuario, id_pedido)
-VALUES
-    (DEFAULT, 'Silla Reclinable', 'sillas', 'santiago', 50000 , 2, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 1),
-    (DEFAULT, 'Mause Pad', 'mausepad', 'santiago', 15000 , 10, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 2),
-    (DEFAULT, 'Escritorio', 'escritorio', 'santiago', 10000 , 2, '3fbc85f3-e3ab-46b5-827d-780cc0aa8c0a', 2);
 
--- Insertar registros en la tabla de imágenes
-INSERT INTO imagenes_producto (id_inventario, url)
+INSERT INTO inventory (name, category, shipping, price, stock, user_id, order_id)
 VALUES
-    ((SELECT id FROM inventario WHERE nombre = 'silla' limit 1), 'src/assets/img/silla1.jpg');
+    ('Producto 1', 'Electrónico', 'Express', 500, 10, 'fa65c69d-f5b7-4f03-b188-a12b006c0bf7', 2);
 
-INSERT INTO imagenes_producto (id_inventario, url)
+-- Insertar registros en la tabla de favorites
+
+INSERT INTO favorites (user_id, inventory_id)
 VALUES
-    ((SELECT id FROM inventario WHERE nombre = 'Escritorio'), 'src/assets/img/escritorio-gamer.jpg');
+    ('fa65c69d-f5b7-4f03-b188-a12b006c0bf7', 4);
+
+--Insertar url de imagenes
+
+INSERT INTO image_product (inventory_id, url)
+VALUES
+    (4, '/src/assets/img');
+

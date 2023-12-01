@@ -51,6 +51,19 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// Ruta para agregar un nuevo elemento al inventario
+router.post('/', async (req, res) => {
+  const { nombre, categoria, envio, precio, stock, userId } = req.body;
+
+  try {
+    const newInventoryItem = await inventoryController.createInventory(nombre, categoria, envio, precio, stock, userId);
+    res.status(201).json(newInventoryItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al agregar elemento al inventario' });
+  }
+});
+
 // Ruta para actualizar un elemento del inventario
 router.put('/:id', async (req, res) => {
   const inventoryId = parseInt(req.params.id, 10)

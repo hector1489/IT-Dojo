@@ -4,7 +4,7 @@ interface User {
   id: string
   email: string
   pass: string
-  es_admin: boolean
+  is_admin: boolean
 }
 
 class UserModel {
@@ -24,10 +24,10 @@ class UserModel {
     }
   }
 
-  async getUserById(userId: string): Promise<User | undefined> {
+  async getUserById(userId: string): Promise<User | { error: string }> {
     try {
       const result: QueryResult<User> = await this.pool.query('SELECT * FROM users WHERE id = $1;', [userId])
-      return result.rows[0]
+      return result.rows[0] || { error: 'Usuario no encontrado' }
     } catch (error) {
       console.error('Error al obtener usuario por ID:', error)
       throw new Error('Error al obtener usuario por ID')
