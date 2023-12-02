@@ -39,11 +39,11 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className='container mt-4'>
-      <div className='row justify-content-center'>
-        <div className='col-md-6'>
+      <div className='row justify-content-center align-items-center'>
+        <div className='col-md-6 mb-4 text-center'>
           <UserAccount username={state.username} email={state.email} />
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-6 mb-4 text-center'>
           <SignupAccount username={state.username} email={state.email} />
         </div>
       </div>

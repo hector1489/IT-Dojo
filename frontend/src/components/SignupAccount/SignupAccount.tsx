@@ -20,7 +20,7 @@ const SignupAccount: React.FC<SignupAccountProps> = ({ username, email }) => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+   
   };
 
   return (
