@@ -1,12 +1,13 @@
-import UserModel from '../models/userModel'
-import { signToken } from '../utils/jwt'
-import * as bcrypt from '../utils/bcrypt'
+import UserModel from '../models/userModel';
+import { jwtSign } from '../utils/jwt';
+import * as bcrypt from '../utils/bcrypt';
+import { comparePassword } from '../utils/bcrypt';
 
 class UsersController {
-  private userModel: UserModel
+  private userModel: UserModel;
 
   constructor(userModel: UserModel) {
-    this.userModel = userModel
+    this.userModel = userModel;
   }
 
   async getUsers() {
@@ -19,7 +20,7 @@ class UsersController {
 
   async getUserById(userId: string) {
     try {
-      return await this.userModel.getUserById(userId);
+      return await this.userModel.getUserById(userId)
     } catch (error) {
       throw new Error('Error al obtener usuario por ID desde el controlador')
     }
@@ -43,25 +44,28 @@ class UsersController {
   }
 
   async login(email: string, pass: string) {
+    console.log('Iniciando proceso de autenticación');
     try {
       const user = await this.userModel.getUserByEmail(email);
       if (!user) {
         throw new Error('Usuario no encontrado');
       }
-      const isPasswordValid = await bcrypt.comparePassword(pass, user.pass);
+      const isPasswordValid = await comparePassword(pass, user.pass);
       if (!isPasswordValid) {
         throw new Error('Contraseña incorrecta');
       }
-      const token = signToken({ userId: user.id, email: user.email });
+      const token = jwtSign({ userId: user.id, email: user.email });
+      console.log('Proceso de autenticación exitoso');
       return { token, user };
     } catch (error) {
+      console.error('Error durante la autenticación:', error);
       throw new Error('Error al autenticar usuario desde el controlador: ');
     }
   }
 
   async updateUser(userId: string, email: string, pass: string, is_admin: boolean) {
     try {
-      const hashedPassword = await bcrypt.hashPassword(pass)
+      const hashedPassword = await bcrypt.hashPassword(pass);
       return await this.userModel.updateUser(userId, email, hashedPassword, is_admin)
     } catch (error) {
       throw new Error('Error al actualizar usuario desde el controlador')

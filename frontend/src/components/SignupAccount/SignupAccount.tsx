@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './SignupAccount.css';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 interface SignupAccountProps {
-  username: string;
   email: string;
+  pass: string;
 }
 
-const SignupAccount: React.FC<SignupAccountProps> = ({ username, email }) => {
+const SignupAccount: React.FC<SignupAccountProps> = ({ email, pass }) => {
   const [user, setUser] = useState({
     email: '',
     pass: '',
@@ -18,9 +19,15 @@ const SignupAccount: React.FC<SignupAccountProps> = ({ username, email }) => {
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   
+
+    try {
+      const response = await axios.post('/register', user);
+      const { token } = response.data;
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
   };
 
   return (

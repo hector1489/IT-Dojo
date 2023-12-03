@@ -2,12 +2,13 @@ import express, { Router } from 'express';
 import UserModel from '../models/userModel';
 import UsersController from '../controllers/usersController';
 import { hashPassword } from '../utils/bcrypt';
+import { verifyToken } from '../middleware/event.middleware';
 
 const userRoutes = (userModel: UserModel): Router => {
   const usersController = new UsersController(userModel);
   const router = express.Router();
 
-  router.get('/', async (_, res) => {
+  router.get('/', verifyToken, async (_, res) => {
     try {
       const users = await usersController.getUsers();
       res.json(users);
@@ -40,8 +41,9 @@ const userRoutes = (userModel: UserModel): Router => {
     }
   });
 
-  router.post('/login', async (req, res) => {
+  router.post('/login',verifyToken, async (req, res) => {
     const { email, pass } = req.body
+    console.log(req.body)
     try {
       const { token, user } = await usersController.login(email, pass)
       res.json({ token, user })

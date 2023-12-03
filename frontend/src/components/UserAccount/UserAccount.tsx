@@ -1,17 +1,32 @@
 import { useState } from 'react';
 import './userAccount.css';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 interface UserAccountProps {
-  username: string;
   email: string;
+  pass: string;
 }
 
-const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
+const UserAccount: React.FC<UserAccountProps> = ({ email, pass }) => {
   const [user, setUser] = useState({
     email: '',
     pass: '',
   });
+
+  const [token, setToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const getLogin = async () => {
+    try {
+      const response = await axios.post('/login', user);
+      const { token } = response.data;
+      setToken(token);
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('Failed to log in. Please try again.');
+    }
+  };
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,7 +35,7 @@ const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    getLogin();
   };
 
   return (
@@ -57,6 +72,9 @@ const UserAccount: React.FC<UserAccountProps> = ({ username, email }) => {
           Login
         </Button>
       </Form>
+
+      {token && <div className="token-info">Token: {token}</div>}
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };

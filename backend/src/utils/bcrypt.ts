@@ -9,3 +9,4 @@ export function hashPassword(pass: string): Promise<string> {
 export function comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
   return bcrypt.compare(plainPassword, hashedPassword)
 }
+

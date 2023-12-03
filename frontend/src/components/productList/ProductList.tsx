@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './ProductList.css';
 
+
 interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
+  category: string;
+  stock: number;
 }
 
-interface ProductListProps {
-  products: Product[];
-}
+const ProductList: React.FC= () => {
+  const { products } = globalState;
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+  if (!products || products.length === 0) {
+    return <div>No hay productos disponibles</div>;
+  }
+
   return (
     <div className="product-list-container">
       <h2>Product List</h2>
       <div className="card-container">
-        {products.map(product => (
+        {products.map((product: Product) => (
           <Card key={product.id} className="product-card">
             <Card.Body>
               <Card.Title>{product.name}</Card.Title>
