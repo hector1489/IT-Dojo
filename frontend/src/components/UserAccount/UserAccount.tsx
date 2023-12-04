@@ -1,41 +1,30 @@
 import { useState } from 'react';
 import './userAccount.css';
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface UserAccountProps {
-  email: string;
-  pass: string;
+
 }
 
-const UserAccount: React.FC<UserAccountProps> = ({ email, pass }) => {
-  const [user, setUser] = useState({
-    email: '',
-    pass: '',
-  });
-
+const UserAccount: React.FC<UserAccountProps> = () => {
+  const { login } = useAuth();
+  const [email, setEmail] = useState<string>('');
+  const [pass, setPass] = useState<string>('');
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const getLogin = async () => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      const response = await axios.post('/login', user);
-      const { token } = response.data;
-      setToken(token);
+      login(email, pass);
+      navigate('/profile');
     } catch (error) {
       console.error('Error during login:', error);
-      setError('Failed to log in. Please try again.');
+      setError('Failed to login. Please try again.');
     }
-  };
-
-  const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
-  };
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    getLogin();
   };
 
   return (
@@ -46,9 +35,8 @@ const UserAccount: React.FC<UserAccountProps> = ({ email, pass }) => {
           <Form.Control
             type="email"
             placeholder="Enter your email"
-            name="email"
-            value={user.email}
-            onChange={handleUserChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Text className="text-muted">
             We will never share your email with anyone else.
@@ -60,9 +48,8 @@ const UserAccount: React.FC<UserAccountProps> = ({ email, pass }) => {
           <Form.Control
             type="password"
             placeholder="Password"
-            name="pass"
-            value={user.pass}
-            onChange={handleUserChange}
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">

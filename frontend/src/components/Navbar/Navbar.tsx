@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
 import './Navbar.css';
-import DataContext from '../../context/context';
+import DataContext, { DataContextProps } from '../../context/context';
 
 const Navbar: React.FC = () => {
   const { shopCart, formatNumber } = useContext(DataContext) as DataContextProps;
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           <Nav.Link as={Link} to="/login" className={`nav-link ${setActiveClass('/login')}`}>Login</Nav.Link>
           <Nav.Link as={Link} to="/profile" className={`nav-link ${setActiveClass('/profile')}`}>Profile</Nav.Link>
           <Nav.Link as={Link} to="/products" className={`nav-link ${setActiveClass('/products')}`}>Products</Nav.Link>
-          <Nav.Link as={Link} to="/Cart" className={`nav-link ${setActiveClass('/Cart')}`}>
+          <Nav.Link as={Link} to="/cart" className={`nav-link ${setActiveClass('/Cart')}`}>
             <div className="cart-icon">
               🛒 <span className="cart-total">{formatNumber(calculateTotal())}</span>
             </div>

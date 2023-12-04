@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
-import ProductPage from './pages/ProductPage';
-import UserPage from './pages/UserPage';
-import axios from "axios"
-import DataContext from './context/context';
+import { Home, LoginPage, UserPage, ProductPage, CartPage } from './pages/index';
+import axios from 'axios';
+import DataContext, { DataContextProps, CartItem } from './context/context';
+import { AuthProvider } from './context/AuthContext';
 
 interface Product {
   id: string;
@@ -16,23 +14,14 @@ interface Product {
   stock: number;
 }
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  img: string;
-  count: number;
-}
-
-
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [data, setData] = useState<any[]>([]);
   const [shopCart, setShopCart] = useState<CartItem[]>([]);
 
-
   useEffect(() => {
-    axios.get('products')
+    axios
+      .get('products')
       .then(response => {
         setProducts(response.data);
       })
@@ -42,48 +31,49 @@ const App: React.FC = () => {
   }, []);
 
   const addToCart = (product: Product) => {
-    setShopCart((prevShopCart: CartItem[]) => {
-      const existingProduct = prevShopCart.find((item) => item.id === product.id);
+    setShopCart(prevShopCart => {
+      const existingProduct = prevShopCart.find(item => item.id === product.id);
+
       if (existingProduct) {
-        return prevShopCart.map((item) =>
+        return prevShopCart.map(item =>
           item.id === product.id ? { ...item, count: item.count + 1 } : item
         );
       } else {
-        return [...prevShopCart, { id: product.id, price: product.price, name: product.name, count: 1 }];
+        return [
+          ...prevShopCart,
+          { id: product.id, price: product.price, name: product.name, count: 1 }
+        ];
       }
     });
-  }
+  };
 
   const increase = (productId: string) => {
-    setShopCart((prevShopCart) =>
-      prevShopCart.map((item) =>
+    setShopCart(prevShopCart =>
+      prevShopCart.map(item =>
         item.id === productId ? { ...item, count: item.count + 1 } : item
       )
-    )
-  }
+    );
+  };
 
   const decrease = (productId: string) => {
-    setShopCart((prevShopCart) => {
-      const updatedCart = prevShopCart.map((item) =>
-        item.id === productId
-          ? { ...item, count: item.count - 1 }
-          : item
-      )
+    setShopCart(prevShopCart => {
+      const updatedCart = prevShopCart.map(item =>
+        item.id === productId ? { ...item, count: item.count - 1 } : item
+      );
 
-      return updatedCart.filter((item) => item.count > 0)
-    })
-  }
+      return updatedCart.filter(item => item.count > 0);
+    });
+  };
 
   const removeFromCart = (productId: string) => {
-    setShopCart((prevShopCart) =>
-      prevShopCart.filter((item) => item.id !== productId)
-    )
-  }
+    setShopCart(prevShopCart =>
+      prevShopCart.filter(item => item.id !== productId)
+    );
+  };
 
   const formatNumber = (number: number) => {
     return number.toLocaleString();
-  }
-
+  };
 
   const globalState: DataContextProps = {
     products,
@@ -96,10 +86,11 @@ const App: React.FC = () => {
     increase,
     decrease,
     removeFromCart,
-    formatNumber,
+    formatNumber
   };
 
   return (
+    <AuthProvider>
     <DataContext.Provider value={globalState}>
       <Navbar />
       <Routes>
@@ -107,8 +98,10 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<UserPage />} />
         <Route path="/products" element={<ProductPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </DataContext.Provider>
+    </AuthProvider>
   );
 };
 

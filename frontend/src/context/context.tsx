@@ -1,20 +1,25 @@
 import { createContext } from "react";
 
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    category: string;
-    stock: number;
-  }
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+  stock: number;
+}
 
-  interface CartItem {
-    id: string;
-    name: string;
-    price: number;
-    count: number;
-  }
-interface DataContextProps {
+export interface AuthContextProps {
+  user: string | null;
+  login: (email: string, password: string) => void;
+  logout: () => void;
+}
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  count: number;
+}
+export interface DataContextProps {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   data: any[];

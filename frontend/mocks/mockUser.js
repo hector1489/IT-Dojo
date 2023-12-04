@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw'
 const login = http.post('/login', async ({ request }) => {
   const user = await request.json()
 
-  if (!user.email || !user.password) {
+  if (!user.email || !user.pass) {
     return HttpResponse.json(
       { error: 'Debe ingresar todos los campos' },
       { status: 404 }

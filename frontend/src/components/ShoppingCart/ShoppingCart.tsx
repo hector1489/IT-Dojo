@@ -1,24 +1,63 @@
-import React from 'react';
+import { useContext } from 'react';
+import { Button } from 'react-bootstrap';
+import DataContext, { DataContextProps } from '../../context/context';
+import { useNavigate } from 'react-router-dom';
+import './ShoppingCart.css';
 
-interface ShoppingCartProps {
-  items: { id: number; name: string; price: number }[];
-}
+const ShoppingCart: React.FC = () => {
+  const {
+    shopCart,
+    formatNumber,
+    increase,
+    decrease,
+    removeFromCart,
+  } = useContext(DataContext) as DataContextProps;
 
-const ShoppingCart: React.FC<ShoppingCartProps> = ({ items }) => {
+  const navigate = useNavigate();
+
+  const total = shopCart.reduce((acc, { count, price }) => acc + price * count, 0);
+
+  const handleGoToPaying = () => {
+    navigate('/paying');
+  };
+
   return (
-    <div>
-      <h2>Shopping Cart</h2>
-      {items.length === 0 ? (
-        <p>Your shopping cart is empty.</p>
-      ) : (
-        <ul>
-          {items.map((item) => (
-            <li key={item.id}>
-              {item.name} - ${item.price}
+    <div className="container-cart">
+      <div className="p-2">
+        <h2>Detalles del pedido:</h2>
+      </div>
+      <div className="p-1 bg-dark">
+        <ul className="cart-ul">
+          {shopCart.map((item) => (
+            <li key={item.id} className="cart-item">
+              <div className="item-details">
+                <span className="fw-bold" style={{ textTransform: 'capitalize' }}>
+                  {item.name}
+                </span>
+                <div className="quantity-controls">
+                  <span className="fw-bold text-white">Precio: $ {formatNumber(item.price)} </span>
+                  <Button variant="danger" onClick={() => decrease(item.id)}>
+                    -
+                  </Button>
+                  <b>{item.count}</b>
+                  <Button variant="primary" onClick={() => increase(item.id)}>
+                    +
+                  </Button>
+                </div>
+                <span className="fw-bold">Total: ${formatNumber(item.price * item.count)} </span>
+              </div>
             </li>
           ))}
         </ul>
-      )}
+        <div className="total-price">
+          <span> Precio total del pedido: ${formatNumber(total)}</span>
+        </div>
+        {total > 0 && (
+          <div className="btn-price">
+            <Button onClick={handleGoToPaying}>Ir a pagar</Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
