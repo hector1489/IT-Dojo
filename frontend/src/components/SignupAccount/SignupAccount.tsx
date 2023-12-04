@@ -29,7 +29,7 @@ const SignupAccount: React.FC = () => {
   };
 
   return (
-    <div className="box-signup col-md-6">
+    <div className="box-signup">
       <Form onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className="fw-bold text-uppercase">Signup</Form.Label>

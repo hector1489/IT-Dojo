@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import { Home, LoginPage, UserPage, ProductPage, CartPage } from './pages/index';
+import { Home, LoginPage, UserPage, ProductPage, CartPage, PayingPage } from './pages/index';
 import axios from 'axios';
 import DataContext, { DataContextProps, CartItem } from './context/context';
 import { AuthProvider } from './context/AuthContext';
@@ -98,6 +98,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<UserPage />} />
         <Route path="/products" element={<ProductPage />} />
+        <Route path="/paying" element={<PayingPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Routes>
     </DataContext.Provider>
