@@ -18,7 +18,7 @@ const login = http.post('/login', async ({ request }) => {
   }
 
   return HttpResponse.json(
-    { token: 'fakeToken' },
+    { token: 'fakeToken', user: user.email },
     { status: 200 }
   )
 })
@@ -41,7 +41,7 @@ const register = http.post('/register', async ({ request }) => {
   }
 
   return HttpResponse.json(
-    { token: 'fakeToken' },
+    { token: 'fakeToken'},
     { status: 200 }
   )
 })

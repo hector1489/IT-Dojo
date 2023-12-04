@@ -1,5 +1,4 @@
 import { createContext, useContext, ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export interface AuthContextProps {
@@ -13,7 +12,6 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -22,8 +20,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const response = await axios.post('/login', { email, pass });
       const { token, user } = response.data;
+      console.log(response.data)
       setToken(token);
-      setUser(user);
+      setUser( user );
+      console.log( user )
     } catch (error) {
       console.error('Error during login:', error);
       setError('Failed to login. Please try again.');
@@ -43,7 +43,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = () => {
     setUser(null);
-    navigate('/#/');
   };
 
   const contextValue: AuthContextProps = {
