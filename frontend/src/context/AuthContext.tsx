@@ -20,10 +20,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const response = await axios.post('/login', { email, pass });
       const { token, user } = response.data;
-      console.log(response.data)
       setToken(token);
       setUser( user );
-      console.log( user )
     } catch (error) {
       console.error('Error during login:', error);
       setError('Failed to login. Please try again.');
@@ -33,11 +31,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signup = async (email: string, pass: string) => {
     try {
       const response = await axios.post('/register', { email, pass });
-      const { token } = response.data;
+      const { token, user } = response.data;
       setToken(token);
+      setUser( user );
     } catch (error) {
       console.error('Error during registration:', error);
-      setError('Failed to sign up. Please try again.');
+      setError('Failed to signup. Please try again.');
     }
   };
 

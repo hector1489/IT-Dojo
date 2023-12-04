@@ -7,24 +7,35 @@ import { useNavigate } from 'react-router-dom';
 const SignupAccount: React.FC = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [pass, setPass] = useState<string>('');
+  const [repeatPass, setRepeatPass] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
-  const [user, setUser] = useState({
-    email: '',
-    pass: '',
-  });
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'pass') {
+      setPass(value);
+    } else if (name === 'repeatPass') {
+      setRepeatPass(value);
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      signup(user.email, user.pass);
+      if (pass !== repeatPass) {
+        setError('Passwords do not match.');
+        return;
+      }
+      signup(email, pass);
       navigate('/profile');
     } catch (error) {
-      console.error('Error during registration:', error);
+      console.error(error);
+      setError('Failed to sign up. Please try again.');
     }
   };
 
@@ -37,7 +48,7 @@ const SignupAccount: React.FC = () => {
             type="email"
             placeholder="Enter your email"
             name="email"
-            value={user.email}
+            value={email}
             onChange={handleUserChange}
           />
           <Form.Text className="text-muted">
@@ -51,7 +62,7 @@ const SignupAccount: React.FC = () => {
             type="password"
             placeholder="Password"
             name="pass"
-            value={user.pass}
+            value={pass}
             onChange={handleUserChange}
           />
         </Form.Group>
@@ -60,8 +71,8 @@ const SignupAccount: React.FC = () => {
           <Form.Control
             type="password"
             placeholder="Repeat password"
-            name="pass"
-            value={user.pass}
+            name="repeatPass"
+            value={repeatPass}
             onChange={handleUserChange}
           />
         </Form.Group>

@@ -33,7 +33,7 @@ const register = http.post('/register', async ({ request }) => {
     )
   }
 
-  if (user.email !== 'usuario1@example.com' || user.pass !== '123456') {
+  if (user.email === 'usuario1@example.com' && user.pass === '123456') {
     return HttpResponse.json(
       { error: 'Este usuario ya existe!' },
       { status: 404 }
@@ -41,7 +41,7 @@ const register = http.post('/register', async ({ request }) => {
   }
 
   return HttpResponse.json(
-    { token: 'fakeToken'},
+    { token: 'fakeToken', user: user.email },
     { status: 200 }
   )
 })
