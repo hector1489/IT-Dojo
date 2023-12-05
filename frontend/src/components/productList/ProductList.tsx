@@ -48,14 +48,14 @@ const ProductList: React.FC = () => {
             <Card.Body>
               <Card.Title>{product?.name}</Card.Title>
               <Card.Text>${product?.price}</Card.Text>
-              <Button variant="success" onClick={() => handleAddToCart(product)}>
-                Agregar 🛒
+              <Button className='css-button-gradient--4' onClick={() => handleAddToCart(product)}>
+                Adhere 🛒
               </Button>
               <Button
-              variant="info text-white text-decoration-none"
+              className='css-button-gradient--1 '
               onClick={() => handleProduct(product?.id)}
               >
-                Detalle
+                Details
               </Button>
             </Card.Body>
           </Card>

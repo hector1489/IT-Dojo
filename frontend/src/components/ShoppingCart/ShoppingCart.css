@@ -10,19 +10,57 @@
 .cart-ul {
     list-style: none;
     padding: 0;
-    max-width: 600px;
-    margin: 20px auto;
+    width: 100%;
 }
 
 .cart-item {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.item-details {
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
 }
 
 .btn-price {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
+
+.btn-pay {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.css-button-gradient--8 {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-size: 120% auto;
+    background-image: linear-gradient(315deg, #7b4397 0%, #dc2430 75%);
+  }
+  .css-button-gradient--8:hover {
+    background-position: right center;
+  }
+  .css-button-gradient--8:active {
+    top: 2px;
+  }

@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
 
   const setActiveClass = (path: string) =>
     location.pathname === path
-      ? "text-info fw-bold text-decoration-none me-3"
+      ? "text-warning fw-bold text-decoration-none me-3"
       : "text-secondary text-decoration-none me-3";
 
   const calculateTotal = () => {
@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <BootstrapNavbar bg="dark" expand="lg" className='box-navbar d-flex '>
+    <BootstrapNavbar expand="lg" className='box-navbar d-flex '>
       <BootstrapNavbar.Brand href="/" className='fw-bold text-white text-decoration-none text-uppercase ms-4'>IT Dojo.</BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" className="burger-button"/>
       <BootstrapNavbar.Collapse id="basic-navbar-nav" className='ms-4'>

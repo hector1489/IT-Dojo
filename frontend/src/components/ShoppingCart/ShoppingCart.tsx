@@ -23,18 +23,18 @@ const ShoppingCart: React.FC = () => {
   return (
     <div className="container-cart">
       <div className="p-2">
-        <h2>Detalles del pedido:</h2>
+        <h2>Order details:</h2>
       </div>
       <div className="p-1 bg-dark">
         <ul className="cart-ul">
           {shopCart?.map((item) => (
             <li key={item.id} className="cart-item">
-              <div className="item-details">
-                <span className="fw-bold text-white" style={{ textTransform: 'capitalize' }}>
-                  {item?.name}
+              <div className="item-details d-flex">
+                <span className="fw-bold text-white p-1" style={{ textTransform: 'capitalize' }}>
+                  Name: {item?.name}
                 </span>
-                <div className="quantity-controls">
-                  <span className="fw-bold text-white">Precio: $ {formatNumber(item?.price)} </span>
+                <span className="fw-bold text-white p-1">Price: $ {formatNumber(item?.price)} </span>
+                <div className="quantity-controls d-flex">
                   <Button variant="danger" onClick={() => decrease(item?.id)}>
                     -
                   </Button>
@@ -43,22 +43,23 @@ const ShoppingCart: React.FC = () => {
                     +
                   </Button>
                 </div>
-                <span className="fw-bold text-white">Total: ${formatNumber(item?.price * item?.count)} </span>
+                <span className="fw-bold text-white p-1">Total: ${formatNumber(item?.price * item?.count)} </span>
               </div>
             </li>
           ))}
         </ul>
-        <div className="total-price text-white">
-          <span> Total del pedido: ${formatNumber(total)}</span>
+        <div className="total-price text-white text-center">
+          <span> Order total: ${formatNumber(total)}</span>
         </div>
         {total > 0 && (
-          <div className="btn-price p-2">
-            <Button onClick={handleGoToPaying}>Ir a pagar</Button>
+          <div className="btn-pay p-2">
+            <Button onClick={handleGoToPaying} className='css-button-gradient--8'>Go to Pay</Button>
           </div>
         )}
       </div>
     </div>
   );
+
 };
 
 export default ShoppingCart;
