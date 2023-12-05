@@ -5,13 +5,14 @@
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    gap: 20px;
+    justify-content: center;
 }
 
 .product-card {
-    margin: 10px;
     width: 200px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
 .product-card:hover {
@@ -37,9 +38,10 @@
     margin-bottom: 12px;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-around;
+.product-card .btn {
+    width: 100%;
+    margin-top: auto;
+    margin-top: 10px;
 }
 
 .btn-success {
@@ -53,4 +55,9 @@
     color: #fff;
     border: none;
     text-decoration: none;
+}
+
+.btn-success:hover,
+.btn-info:hover {
+    filter: brightness(90%);
 }

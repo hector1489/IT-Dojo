@@ -52,9 +52,6 @@ const UserAccount: React.FC<UserAccountProps> = () => {
             onChange={(e) => setPass(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Remember me" />
-        </Form.Group>
         <Button variant="primary" type="submit">
           Login
         </Button>
