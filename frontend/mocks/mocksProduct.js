@@ -13,7 +13,6 @@ const products = http.get('/products', async () => {
 })
 
 const product = http.get('/product/:id', async () => {
-    await delay(1000)
 
     const { id } = useParams
     const dataById = data.filter((data) => data.id === id )

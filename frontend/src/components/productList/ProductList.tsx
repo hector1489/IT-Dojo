@@ -3,6 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import './ProductList.css';
 import axios from 'axios';
 import DataContext, { DataContextProps } from '../../context/context';
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -14,6 +15,7 @@ interface Product {
 
 const ProductList: React.FC = () => {
   const { products, setProducts, addToCart } = useContext(DataContext) as DataContextProps;
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get('/products')
@@ -33,19 +35,26 @@ const ProductList: React.FC = () => {
     addToCart(product);
   };
 
+  const handleProduct = (id: string) => {
+    navigate(`/details/${id}`)
+  }
+
   return (
     <div className="product-list-container">
       <h2 className='text-center p-2'>Product List :</h2>
       <div className="card-container">
-        {products.map((product: Product) => (
-          <Card key={product.id} className="product-card">
+        {products?.map((product: Product) => (
+          <Card key={product?.id} className="product-card">
             <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
-              <Card.Text>${product.price}</Card.Text>
+              <Card.Title>{product?.name}</Card.Title>
+              <Card.Text>${product?.price}</Card.Text>
               <Button variant="success" onClick={() => handleAddToCart(product)}>
                 Agregar 🛒
               </Button>
-              <Button variant="info text-white text-decoration-none">
+              <Button
+              variant="info text-white text-decoration-none"
+              onClick={() => handleProduct(product?.id)}
+              >
                 Detalle
               </Button>
             </Card.Body>

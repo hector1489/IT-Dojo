@@ -5,6 +5,7 @@ import { Home, LoginPage, UserPage, ProductPage, CartPage, PayingPage } from './
 import axios from 'axios';
 import DataContext, { DataContextProps, CartItem } from './context/context';
 import { AuthProvider } from './context/AuthContext';
+import Details from './components/Details/Details';
 
 interface Product {
   id: string;
@@ -98,6 +99,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<UserPage />} />
         <Route path="/products" element={<ProductPage />} />
+        <Route path="/details/:id" element={<Details />} />
         <Route path="/paying" element={<PayingPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Routes>
