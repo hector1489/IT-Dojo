@@ -35,9 +35,9 @@ const ordersRoutes = (OrdersModel: OrdersModel): Router => {
 
   // Ruta para crear un nuevo pedido
   router.post('/', async (req, res) => {
-    const { userId, estado, direccion_envio } = req.body
+    const { userId, status, shipping_address } = req.body
     try {
-      const newOrder = await ordersController.createOrder(userId, estado, direccion_envio)
+      const newOrder = await ordersController.createOrder(userId, status, shipping_address)
       res.status(201).json(newOrder)
     } catch (error) {
       console.error(error)
@@ -48,9 +48,9 @@ const ordersRoutes = (OrdersModel: OrdersModel): Router => {
   // Ruta para actualizar un pedido
   router.put('/:id', async (req, res) => {
     const orderId = parseInt(req.params.id, 10)
-    const { estado, direccion_envio } = req.body
+    const { status, shipping_address } = req.body
     try {
-      const updatedOrder = await ordersController.updateOrder(orderId, estado, direccion_envio)
+      const updatedOrder = await ordersController.updateOrder(orderId, status, shipping_address)
       if (updatedOrder) {
         res.json(updatedOrder)
       } else {

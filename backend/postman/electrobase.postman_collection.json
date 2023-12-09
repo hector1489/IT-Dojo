@@ -1,0 +1,1801 @@
+{
+	"info": {
+		"_postman_id": "5fe92b7e-452f-481c-be68-2983ee597ff6",
+		"name": "electrobase",
+		"description": "# 🚀 Get started\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these request types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a variable called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more scripts in \"Tests\" to verify if the API works as expected and execute flows.\n    \n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Managing environments](https://learning.postman.com/docs/sending-requests/managing-environments/)  \n[Writing scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30714067"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = JSON.parse(responseBody)",
+									"postman.setEnvironmentVariable('token',jsonData.token)",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"usuario1@example.com\",\n  \"pass\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "succesfull response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"usuario1@example.com\",\n  \"pass\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/users/login",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "415"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"19f-UwQUzJL8JqpUsg68tT/mMKXRPqg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:12:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3ZTRiZmIxMS05YTYyLTQ0MDQtYWVmNS1kYzlhMDA3ZjA0OTciLCJlbWFpbCI6InVzdWFyaW8xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzAyMTAyMzM3LCJleHAiOjE3MDIxMDI2Mzd9.HLU07_3GwrfJ5HoCJym4V6KkknKtu7UeBnAABia_YPc\",\n    \"user\": {\n        \"id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n        \"email\": \"usuario1@example.com\",\n        \"pass\": \"$2b$10$k/YpDNzbPQwVUZNqxxiAKOL77RiMInjB3Zrp566g7nfdFT1zk537e\",\n        \"is_admin\": true\n    }\n}"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"usuario1@example.com\",\n  \"pass\": \"12346\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/users/login",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23-UHCIAFM/swaAglwgDKKCnq2spSQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:19:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Credenciales inválidas\"\n}"
+						}
+					]
+				},
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const [newEvent] = JSON.parse(responseBody)",
+									"postman.setEnvironmentVariable('newUserId',newEvent.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"usuario4@example.com\",\n  \"pass\": \"123456\",\n  \"is_admin\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"usuario4@example.com\",\n  \"pass\": \"123456\",\n  \"is_admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/users/signup",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "163"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a3-7vFIzPaqa523ZP34lMgK0ZmYTIE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:17:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"c66a87c1-942c-42c8-bbf6-1d0624284b47\",\n    \"email\": \"usuario4@example.com\",\n    \"pass\": \"$2b$10$DRfE5eCbQuJ2ETlXizkIquk.ANtJbgNh0iKy4kPF08/S2lqq5htvG\",\n    \"is_admin\": false\n}"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"usuario4@example.com\",\n  \"pass\": \"123456\",\n  \"is_admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/users/signup",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-39gB6FIi8CmLS7Sz+zc4L/wuorg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:18:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Error al crear usuario\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "inventory",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/inventory/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"inventory",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "succesfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/inventory/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-iVSYoz9l77HG6aE0Mbse6UN2p6U\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Nov 2023 18:54:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 4,\n        \"name\": \"Producto 1\",\n        \"category\": \"Electrónico\",\n        \"shipping\": \"Express\",\n        \"price\": 500,\n        \"stock\": 10,\n        \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n        \"order_id\": 2\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/inventory/4",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"inventory",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "succesfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/inventory/4",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"inventory",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "160"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a0-ywYBZO4r61JQp6DwLocRO5sWiqo\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Nov 2023 18:53:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"Producto 1\",\n    \"category\": \"Electrónico\",\n    \"shipping\": \"Express\",\n    \"price\": 500,\n    \"stock\": 10,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"order_id\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 4,\n    \"name\": \"Producto 1\",\n    \"category\": \"Electrónico\",\n    \"shipping\": \"Express\",\n    \"price\": 600,\n    \"stock\": 20,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"order_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/inventory/4",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"inventory",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "succesfull response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 4,\n    \"name\": \"Producto 1\",\n    \"category\": \"Electrónico\",\n    \"shipping\": \"Express\",\n    \"price\": 600,\n    \"stock\": 20,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"order_id\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/inventory/4",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"inventory",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "138"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8a-bSB0hnZdDZSNgF3aeTiDipwhWxo\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Nov 2023 18:59:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": null,\n    \"category\": null,\n    \"shipping\": null,\n    \"price\": null,\n    \"stock\": 20,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"order_id\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "inventory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Producto 2\",\n    \"category\": \"Electrónico\",\n    \"shipping\": \"Express\",\n    \"price\": 600,\n    \"stock\": 20,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"order_id\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/inventory/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"inventory",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "error response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 5,\n    \"name\": \"Producto 2\",\n    \"category\": \"Electrónico\",\n    \"shipping\": \"Express\",\n    \"price\": 600,\n    \"stock\": 20,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/inventory/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-vMXJzLPXrIRsMnQYoBKz/ab5ous\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 30 Nov 2023 19:19:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Error al agregar elemento al inventario\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/orders/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2083"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"823-PeBQrNV+HKPtVOkDU33laZQyWgs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:24:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"command\": \"SELECT\",\n    \"rowCount\": 2,\n    \"oid\": null,\n    \"rows\": [\n        {\n            \"id\": 1,\n            \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n            \"date\": \"2023-11-30T17:06:41.257Z\",\n            \"status\": \"En Proceso\",\n            \"shipping_address\": \"Dirección de Envío Ejemplo\"\n        },\n        {\n            \"id\": 2,\n            \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n            \"date\": \"2023-11-30T17:28:21.430Z\",\n            \"status\": \"Pendiente\",\n            \"shipping_address\": \"123 Calle Principal\"\n        }\n    ],\n    \"fields\": [\n        {\n            \"name\": \"id\",\n            \"tableID\": 17423,\n            \"columnID\": 1,\n            \"dataTypeID\": 23,\n            \"dataTypeSize\": 4,\n            \"dataTypeModifier\": -1,\n            \"format\": \"text\"\n        },\n        {\n            \"name\": \"user_id\",\n            \"tableID\": 17423,\n            \"columnID\": 2,\n            \"dataTypeID\": 2950,\n            \"dataTypeSize\": 16,\n            \"dataTypeModifier\": -1,\n            \"format\": \"text\"\n        },\n        {\n            \"name\": \"date\",\n            \"tableID\": 17423,\n            \"columnID\": 3,\n            \"dataTypeID\": 1114,\n            \"dataTypeSize\": 8,\n            \"dataTypeModifier\": -1,\n            \"format\": \"text\"\n        },\n        {\n            \"name\": \"status\",\n            \"tableID\": 17423,\n            \"columnID\": 4,\n            \"dataTypeID\": 1043,\n            \"dataTypeSize\": -1,\n            \"dataTypeModifier\": 54,\n            \"format\": \"text\"\n        },\n        {\n            \"name\": \"shipping_address\",\n            \"tableID\": 17423,\n            \"columnID\": 5,\n            \"dataTypeID\": 1043,\n            \"dataTypeSize\": -1,\n            \"dataTypeModifier\": 259,\n            \"format\": \"text\"\n        }\n    ],\n    \"_parsers\": [\n        null,\n        null,\n        null,\n        null,\n        null\n    ],\n    \"_types\": {\n        \"_types\": {\n            \"arrayParser\": {},\n            \"builtins\": {\n                \"BOOL\": 16,\n                \"BYTEA\": 17,\n                \"CHAR\": 18,\n                \"INT8\": 20,\n                \"INT2\": 21,\n                \"INT4\": 23,\n                \"REGPROC\": 24,\n                \"TEXT\": 25,\n                \"OID\": 26,\n                \"TID\": 27,\n                \"XID\": 28,\n                \"CID\": 29,\n                \"JSON\": 114,\n                \"XML\": 142,\n                \"PG_NODE_TREE\": 194,\n                \"SMGR\": 210,\n                \"PATH\": 602,\n                \"POLYGON\": 604,\n                \"CIDR\": 650,\n                \"FLOAT4\": 700,\n                \"FLOAT8\": 701,\n                \"ABSTIME\": 702,\n                \"RELTIME\": 703,\n                \"TINTERVAL\": 704,\n                \"CIRCLE\": 718,\n                \"MACADDR8\": 774,\n                \"MONEY\": 790,\n                \"MACADDR\": 829,\n                \"INET\": 869,\n                \"ACLITEM\": 1033,\n                \"BPCHAR\": 1042,\n                \"VARCHAR\": 1043,\n                \"DATE\": 1082,\n                \"TIME\": 1083,\n                \"TIMESTAMP\": 1114,\n                \"TIMESTAMPTZ\": 1184,\n                \"INTERVAL\": 1186,\n                \"TIMETZ\": 1266,\n                \"BIT\": 1560,\n                \"VARBIT\": 1562,\n                \"NUMERIC\": 1700,\n                \"REFCURSOR\": 1790,\n                \"REGPROCEDURE\": 2202,\n                \"REGOPER\": 2203,\n                \"REGOPERATOR\": 2204,\n                \"REGCLASS\": 2205,\n                \"REGTYPE\": 2206,\n                \"UUID\": 2950,\n                \"TXID_SNAPSHOT\": 2970,\n                \"PG_LSN\": 3220,\n                \"PG_NDISTINCT\": 3361,\n                \"PG_DEPENDENCIES\": 3402,\n                \"TSVECTOR\": 3614,\n                \"TSQUERY\": 3615,\n                \"GTSVECTOR\": 3642,\n                \"REGCONFIG\": 3734,\n                \"REGDICTIONARY\": 3769,\n                \"JSONB\": 3802,\n                \"REGNAMESPACE\": 4089,\n                \"REGROLE\": 4096\n            }\n        },\n        \"text\": {},\n        \"binary\": {}\n    },\n    \"RowCtor\": null,\n    \"rowAsArray\": false,\n    \"_prebuiltEmptyResultObject\": {\n        \"id\": null,\n        \"user_id\": null,\n        \"date\": null,\n        \"status\": null,\n        \"shipping_address\": null\n    }\n}"
+						},
+						{
+							"name": "error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/order",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"order"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'none'"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "144"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:25:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /order</pre>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/orders/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "163"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a3-Rt0yISFGgcKWoTEyV6FdN8mkO8M\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:27:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"En Proceso\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo\"\n}"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/20",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										"20"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-ajb5CCgiBWpBV6gp/tj1n2nU7AA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:27:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Pedido no encontrado\"\n}"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/orders/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-90gpGJUJwXHdz4F2x58iSBvBX2A\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:39:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo\"\n}"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/20",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										"20"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-ajb5CCgiBWpBV6gp/tj1n2nU7AA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:40:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Pedido no encontrado\"\n}"
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 3,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo 3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/orders/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo 3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/orders/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"orders",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"82-y/NnrL7rLrJlxQeqZPpfJuWZGQA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:42:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"user_id\": null,\n    \"date\": \"2023-12-09T06:42:14.645Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo 3\"\n}"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"user_id\": \"7e4bfb11-9a62-4404-aef5-dc9a007f0497\",\n    \"date\": \"2023-11-30T17:06:41.257Z\",\n    \"status\": \"Pendiente\",\n    \"shipping_address\": \"Dirección de Envío Ejemplo 3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/order",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"order"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'none'"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "145"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:43:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot POST /order</pre>\n    </body>\n</html>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "favorites",
+			"item": [
+				{
+					"name": "favorites",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/favorites/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"favorites",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/favorites/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"favorites",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "114"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"72-z3Qqp3c1ObxulytgeEjK3unfmYA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:45:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n        \"inventory_id\": 4,\n        \"added_at\": \"2023-11-30T17:33:11.532Z\"\n    }\n]"
+						},
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/favorite/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"favorite",
+										""
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'none'"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:45:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /favorite/</pre>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/favorites/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"favorites",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/favorites/12",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"favorites",
+										"12"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-LadkTSPaeo4t5N4QdNZMex42M1c\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:46:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Favorito no encontrado\"\n}"
+						},
+						{
+							"name": "sucessfull response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/favorites/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"favorites",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-25YnSjrGRNn85sJqOLXCr5I37E8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:46:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"inventory_id\": 4,\n    \"added_at\": \"2023-11-30T17:33:11.532Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"inventory_id\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/favorites/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"favorites",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "falled response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": \"fa65c69d-f5b7-4f03-b188-a12b006c0bf7\",\n    \"inventory_id\": 4,\n    \"added_at\": \"2023-12-30T17:33:11.532Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/favorites/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"favorites",
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23-1sHnVTZ9gaPiWpjxsyK8G+9zEUk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Dec 2023 06:52:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Error al crear favorito\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
