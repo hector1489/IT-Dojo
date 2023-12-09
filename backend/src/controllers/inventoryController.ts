@@ -42,12 +42,12 @@ class InventoryController {
 
   async deleteInventory(inventoryId: number) {
     try {
-      await this.inventoryModel.deleteInventory(inventoryId);
+      await this.inventoryModel.deleteInventory(inventoryId)
     } catch (error) {
-      throw new Error('Error al eliminar elemento del inventario desde el controlador');
+      throw new Error('Error al eliminar elemento del inventario desde el controlador')
     }
   }
 
 }
 
-export default InventoryController;
+export default InventoryController

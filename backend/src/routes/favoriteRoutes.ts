@@ -1,11 +1,10 @@
-import express from 'express'
-import pool from '../database/db'
+import express, { Router } from 'express'
 import FavoriteModel from '../models/favoriteModel'
 import FavoriteController from '../controllers/favoriteController'
 
-const router = express.Router()
-const favoriteModel = new FavoriteModel(pool)
-const favoriteController = new FavoriteController(favoriteModel)
+const favoriteRoutes = (FavoriteModel: FavoriteModel): Router => {
+  const favoriteController = new FavoriteController(FavoriteModel)
+  const router = express.Router()
 
 
 // Ruta para obtener todos los favoritos
@@ -25,12 +24,12 @@ router.get('/:id', async (req, res) => {
   try {
     const favorite = await favoriteController.getFavoriteById(favoriteId)
     if (favorite) {
-      res.json(favorite);
+      res.json(favorite)
     } else {
       res.status(404).json({ error: 'Favorito no encontrado' })
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
     res.status(500).json({ error: 'Error al obtener favorito por ID' })
   }
 })
@@ -59,4 +58,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-export default router
+return router
+}
+
+export default favoriteRoutes

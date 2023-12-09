@@ -1,9 +1,9 @@
-
+import './Footer.css'
 
 const Footer: React.FC = () => {
   return (
-    <div className="box-footer text-center bg-dark text-white p-1">
-        <h4>Thank you for your visit in our store.</h4>
+    <div className="box-footer text-center  p-1">
+        <h5>Thank you for your visit in our store.</h5>
     </div>
   );
 };

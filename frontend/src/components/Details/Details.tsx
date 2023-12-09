@@ -13,13 +13,13 @@ const Details: React.FC = () => {
   return (
     <div className="container">
       <div className="product-details">
-        <h2>Detalles del Producto</h2>
+        <h2>Product Details</h2>
         {product && (
           <div>
             <h3>{product.name}</h3>
-            <p>Precio: ${product.price}</p>
-            <p>Categoría: {product.category}</p>
-            <p>Stock disponible: {product.stock}</p>
+            <p>Price: ${product.price}</p>
+            <p>Category: {product.category}</p>
+            <p>Stock: {product.stock}</p>
           </div>
         )}
       </div>

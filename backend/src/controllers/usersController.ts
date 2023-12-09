@@ -1,13 +1,13 @@
-import UserModel from '../models/userModel';
-import { jwtSign } from '../utils/jwt';
-import * as bcrypt from '../utils/bcrypt';
-import { comparePassword } from '../utils/bcrypt';
+import UserModel from '../models/userModel'
+import { jwtSign } from '../utils/jwt'
+import * as bcrypt from '../utils/bcrypt'
+import { comparePassword } from '../utils/bcrypt'
 
 class UsersController {
-  private userModel: UserModel;
+  private userModel: UserModel
 
   constructor(userModel: UserModel) {
-    this.userModel = userModel;
+    this.userModel = userModel
   }
 
   async getUsers() {
@@ -44,22 +44,21 @@ class UsersController {
   }
 
   async login(email: string, pass: string) {
-    console.log('Iniciando proceso de autenticación');
     try {
-      const user = await this.userModel.getUserByEmail(email);
+      const user = await this.userModel.getUserByEmail(email)
       if (!user) {
-        throw new Error('Usuario no encontrado');
+        throw new Error('Usuario no encontrado')
       }
-      const isPasswordValid = await comparePassword(pass, user.pass);
+      const isPasswordValid = await comparePassword(pass, user.pass)
       if (!isPasswordValid) {
-        throw new Error('Contraseña incorrecta');
+        throw new Error('Contraseña incorrecta')
       }
-      const token = jwtSign({ userId: user.id, email: user.email });
-      console.log('Proceso de autenticación exitoso');
-      return { token, user };
+      const token = jwtSign({ userId: user.id, email: user.email })
+      console.log('Proceso de autenticación exitoso')
+      return { token, user }
     } catch (error) {
-      console.error('Error durante la autenticación:', error);
-      throw new Error('Error al autenticar usuario desde el controlador: ');
+      console.error('Error durante la autenticación:', error)
+      throw new Error('Error al autenticar usuario desde el controlador: ')
     }
   }
 

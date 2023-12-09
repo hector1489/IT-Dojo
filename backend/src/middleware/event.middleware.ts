@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { jwtVerify } from '../utils/jwt';
+import { Request, Response, NextFunction } from 'express'
+import { jwtVerify } from '../utils/jwt'
 
 interface User {
   id: string;
@@ -9,7 +9,7 @@ interface User {
 }
 
 interface AuthenticatedRequest extends Request {
-  user?: User;
+  user?: User
 }
 
 const verifyToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -19,37 +19,39 @@ const verifyToken = (req: AuthenticatedRequest, res: Response, next: NextFunctio
     return res.status(401).json({
       code: 401,
       message: 'Token no proporcionado.',
-    });
+    })
   }
 
-  const [bearer, token] = authorizationHeader.split(' ');
+  const [bearer, token] = authorizationHeader.split(' ')
 
   if (bearer !== 'Bearer' || !token) {
     return res.status(401).json({
       code: 401,
       message: 'Formato de token inválido.',
-    });
+    })
   }
 
   try {
-    const decodedUser = jwtVerify(token);
+    const decodedUser = jwtVerify(token)
 
     if (!decodedUser) {
       return res.status(401).json({
         code: 401,
         message: 'Token inválido.',
-      });
+      })
     }
 
-    const decodedUserAsUser: User = decodedUser as User;
-    req.user = decodedUserAsUser;
-    next();
-  } catch (error) {
+    const decodedUserAsUser: User = decodedUser as User
+    req.user = decodedUserAsUser
+    next()
+  } catch (jwtError) {
+    console.error('Error al verificar el token:', jwtError)
+
     return res.status(401).json({
       code: 401,
       message: 'Error al verificar el token.',
-    });
+    })
   }
-};
+}
 
-export { verifyToken };
+export { verifyToken }

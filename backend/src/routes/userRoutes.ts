@@ -1,49 +1,48 @@
-import express, { Router } from 'express';
-import UserModel from '../models/userModel';
-import UsersController from '../controllers/usersController';
-import { hashPassword } from '../utils/bcrypt';
-import { verifyToken } from '../middleware/event.middleware';
+import express, { Router } from 'express'
+import UserModel from '../models/userModel'
+import UsersController from '../controllers/usersController'
+import { hashPassword } from '../utils/bcrypt'
+import { verifyToken } from '../middleware/event.middleware'
 
 const userRoutes = (userModel: UserModel): Router => {
-  const usersController = new UsersController(userModel);
-  const router = express.Router();
+  const usersController = new UsersController(userModel)
+  const router = express.Router()
 
   router.get('/', verifyToken, async (_, res) => {
     try {
-      const users = await usersController.getUsers();
-      res.json(users);
+      const users = await usersController.getUsers()
+      res.json(users)
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al obtener usuarios' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al obtener usuarios' })
     }
-  });
+  })
 
   router.get('/:id', async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.id
     try {
-      const user = await usersController.getUserById(userId);
-      res.json(user || { error: 'Usuario no encontrado' });
+      const user = await usersController.getUserById(userId)
+      res.json(user || { error: 'Usuario no encontrado' })
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al obtener usuario por ID' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al obtener usuario por ID' })
     }
-  });
+  })
 
   router.post('/signup', async (req, res) => {
-    const { email, pass, is_admin } = req.body;
+    const { email, pass, is_admin } = req.body
     try {
-      const hashedPassword = await hashPassword(pass);
-      const newUser = await usersController.createUser(email, hashedPassword, is_admin);
-      res.status(201).json(newUser);
+      const hashedPassword = await hashPassword(pass)
+      const newUser = await usersController.createUser(email, hashedPassword, is_admin)
+      res.status(201).json(newUser)
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al crear usuario' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al crear usuario' })
     }
-  });
+  })
 
-  router.post('/login',verifyToken, async (req, res) => {
+  router.post('/login', async (req, res) => {
     const { email, pass } = req.body
-    console.log(req.body)
     try {
       const { token, user } = await usersController.login(email, pass)
       res.json({ token, user })
@@ -54,29 +53,29 @@ const userRoutes = (userModel: UserModel): Router => {
   })
 
   router.put('/:id', async (req, res) => {
-    const userId = req.params.id;
-    const { email, pass, is_admin } = req.body;
+    const userId = req.params.id
+    const { email, pass, is_admin } = req.body
     try {
-      const updatedUser = await usersController.updateUser(userId, email, pass, is_admin);
-      res.json(updatedUser || { error: 'Usuario no encontrado' });
+      const updatedUser = await usersController.updateUser(userId, email, pass, is_admin)
+      res.json(updatedUser || { error: 'Usuario no encontrado' })
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al actualizar usuario' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al actualizar usuario' })
     }
-  });
+  })
 
   router.delete('/:id', async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.id
     try {
-      await usersController.deleteUser(userId);
-      res.json({ message: 'Usuario eliminado exitosamente' });
+      await usersController.deleteUser(userId)
+      res.json({ message: 'Usuario eliminado exitosamente' })
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al eliminar usuario' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al eliminar usuario' })
     }
-  });
+  })
 
-  return router;
-};
+  return router
+}
 
-export default userRoutes;
+export default userRoutes

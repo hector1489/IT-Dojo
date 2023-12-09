@@ -1,15 +1,27 @@
-import { Pool } from 'pg'
+import { Pool, QueryResult } from 'pg'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const pool = new Pool({
+const config = {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: parseInt(process.env.DB_PORT ?? '5432', 10),
-  allowExitOnIdle: true
-})
+  allowExitOnIdle: true,
+}
 
-export default pool
+const pool = new Pool(config)
+
+const db = async (query: string, values: any[]): Promise<QueryResult<any>> => {
+  try {
+    const result: QueryResult = await pool.query(query, values)
+    return result
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export default db

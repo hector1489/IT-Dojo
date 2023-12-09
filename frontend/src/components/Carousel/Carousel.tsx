@@ -9,10 +9,10 @@ const Gallery: React.FC = () => {
   return (
     <Carousel>
       <div>
-        <img src={image1} alt="Oferta 1" className="gallery-image" />
+        <img src={image2} alt="Oferta 1" className="gallery-image" />
       </div>
       <div>
-        <img src={image2} alt="Oferta 2" className="gallery-image" />
+        <img src={image1} alt="Oferta 2" className="gallery-image" />
       </div>
     </Carousel>
   );
