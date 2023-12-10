@@ -21,11 +21,11 @@ const ShoppingCart: React.FC = () => {
   };
 
   return (
-    <div className="container-cart">
+    <div className="box-cart">
       <div className="p-2">
-        <h2>Order details:</h2>
+        <h2 className='text-uppercase fw-bold'>Order details:</h2>
       </div>
-      <div className="p-1 bg-dark">
+      <div className="box-cart-ul p-1 bg-dark">
         <ul className="cart-ul">
           {shopCart?.map((item) => (
             <li key={item.id} className="cart-item">
@@ -49,7 +49,7 @@ const ShoppingCart: React.FC = () => {
           ))}
         </ul>
         <div className="total-price text-white text-center">
-          <span> Order total: ${formatNumber(total)}</span>
+          <span className='fw-bold'> Order total: ${formatNumber(total)}</span>
         </div>
         {total > 0 && (
           <div className="btn-pay p-2">

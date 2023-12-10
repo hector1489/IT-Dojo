@@ -14,5 +14,37 @@
     "price": 60000,
     "stock": 5,
     "url": "/src/assets/img/mesa1.png"
+  },
+  {
+    "id": "ajajajaja.asasas.lllll",
+    "name": "Lampara",
+    "category": "Lampara",
+    "price": 10000,
+    "stock":15,
+    "url": "/src/assets/img/lampara.jpg"
+  },
+  {
+    "id": "ajajajaja.asasas.aaaaa",
+    "name": "silla-2",
+    "category": "silla",
+    "price": 5500,
+    "stock": 5,
+    "url": "/src/assets/img/Silla.jpg"
+  },
+  {
+    "id": "ajajajaja.asasas.bbbbb",
+    "name": "Escritotio-2",
+    "category": "Escritorio",
+    "price": 50000,
+    "stock": 5,
+    "url": "/src/assets/img/mesa1.png"
+  },
+  {
+    "id": "ajajajaja.asasas.ddddd",
+    "name": "Lampara-2",
+    "category": "Lampara",
+    "price": 10000,
+    "stock":12,
+    "url": "/src/assets/img/lampara.jpg"
   }
 ]
