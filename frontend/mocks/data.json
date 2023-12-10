@@ -1,16 +1,18 @@
 [
-    {
-        "id": "ajajajaja.asasas.asasa",
-        "name": "silla",
-        "category": "silla",
-        "price": 5000,
-        "stock": 10
-    },
-    {
-      "id": "ajajajaja.asasas.zzzzz",
-      "name": "Escritotio",
-      "category": "Escritorio",
-      "price": 60000,
-      "stock": 5
+  {
+    "id": "ajajajaja.asasas.asasa",
+    "name": "silla",
+    "category": "silla",
+    "price": 5000,
+    "stock": 10,
+    "url": "/src/assets/img/Silla.jpg"
+  },
+  {
+    "id": "ajajajaja.asasas.zzzzz",
+    "name": "Escritotio",
+    "category": "Escritorio",
+    "price": 60000,
+    "stock": 5,
+    "url": "/src/assets/img/mesa1.png"
   }
 ]

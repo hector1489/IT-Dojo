@@ -1,4 +1,4 @@
-.container {
+.details-container {
     max-width: 600px;
     margin: auto;
     padding: 20px;
@@ -22,4 +22,9 @@
 
 .product-details p {
     margin: 10px 0;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
 }

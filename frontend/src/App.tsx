@@ -13,6 +13,7 @@ interface Product {
   price: number;
   category: string;
   stock: number;
+  url: string;
 }
 
 const App: React.FC = () => {
@@ -42,7 +43,7 @@ const App: React.FC = () => {
       } else {
         return [
           ...prevShopCart,
-          { id: product.id, price: product.price, name: product.name, count: 1 }
+          { id: product.id, price: product.price, name: product.name, count: 1, url: product.url }
         ];
       }
     });

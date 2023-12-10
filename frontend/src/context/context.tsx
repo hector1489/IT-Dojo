@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   category: string;
   stock: number;
+  url: string;
 }
 
 export interface AuthContextProps {
@@ -18,6 +19,7 @@ export interface CartItem {
   name: string;
   price: number;
   count: number;
+  url: string;
 }
 export interface DataContextProps {
   products: Product[];

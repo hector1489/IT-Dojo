@@ -11,6 +11,7 @@ interface Product {
   price: number;
   category: string;
   stock: number;
+  url: string;
 }
 
 const ProductList: React.FC = () => {
@@ -45,6 +46,7 @@ const ProductList: React.FC = () => {
       <div className="card-container">
         {products?.map((product: Product) => (
           <Card key={product?.id} className="product-card">
+            <Card.Img variant="top" src={product?.url} alt={product?.name} />
             <Card.Body>
               <Card.Title>{product?.name}</Card.Title>
               <Card.Text>${product?.price}</Card.Text>
