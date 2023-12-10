@@ -10,3 +10,5 @@ License
 MIT.
 
 Visitar : / documentation para acceder a toda la documentacion.
+
+Aun estoy trabajando en este traspaso a typeScript gracias por su espera...

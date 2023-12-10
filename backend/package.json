@@ -1,7 +1,7 @@
 {
   "name": "api_itdojo",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.ts",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "lint": "ts-standard",
