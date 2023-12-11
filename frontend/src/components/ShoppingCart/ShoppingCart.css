@@ -25,6 +25,7 @@
     padding: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 .item-details {
     align-items: center;
     gap: 5px;
@@ -45,6 +46,32 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    gap: 10px;
+}
+
+.css-button-gradient {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-size: 120% auto;
+    background-image: linear-gradient(315deg, #000428 0%, #004e92 75%);
+}
+
+.css-button-gradient:hover {
+    background-position: right center;
+}
+
+.css-button-gradient:active {
+    top: 2px;
 }
 
 .css-button-gradient--8 {
@@ -62,10 +89,12 @@
     border: none;
     background-size: 120% auto;
     background-image: linear-gradient(315deg, #7b4397 0%, #dc2430 75%);
-  }
-  .css-button-gradient--8:hover {
+}
+
+.css-button-gradient--8:hover {
     background-position: right center;
-  }
-  .css-button-gradient--8:active {
+}
+
+.css-button-gradient--8:active {
     top: 2px;
-  }
+}

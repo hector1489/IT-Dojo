@@ -41,9 +41,9 @@ const ProductList: React.FC = () => {
   }
 
   return (
-    <div className="product-list-container">
-      <h2 className='text-center p-2'>Product List :</h2>
-      <div className="card-container">
+    <div className="product-list-container p-2">
+      <h2 className='text-center text-uppercase fw-bold p-2'>Product List :</h2>
+      <div className="card-container p-1">
         {products?.map((product: Product) => (
           <Card key={product?.id} className="product-card">
             <Card.Img variant="top" src={product?.url} alt={product?.name} />

@@ -1,11 +1,9 @@
 .box-login {
     width: 30rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #fff;
     padding:10px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     display: inline-block;
     outline: none;
@@ -43,7 +41,8 @@
     padding: 5px 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
     position: relative;
     display: inline-block;
     outline: none;
@@ -55,6 +54,7 @@
 
 .box-login button:hover {
     background-position: right center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .box-login button:active {

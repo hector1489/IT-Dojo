@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Details.css';
 import DataContext, { DataContextProps, Product } from '../../context/context';
@@ -27,6 +27,11 @@ const Details: React.FC = () => {
           </Col>
         </Row>
       )}
+       <div className='row mt-4'>
+        <div className='col-md-12 text-center'>
+          <Link to="/products">Return to Products</Link>
+        </div>
+      </div>
     </Container>
   );
 };

@@ -9,12 +9,18 @@ const ShoppingCart: React.FC = () => {
     shopCart,
     formatNumber,
     increase,
-    decrease
+    decrease,
+    removeFromCart
   } = useContext(DataContext) as DataContextProps;
 
   const navigate = useNavigate();
 
+  const updatedCart = shopCart.filter((item) => item.count > 0)
   const total = shopCart.reduce((acc, { count, price }) => acc + price * count, 0);
+
+  const clearCart = () => {
+    updatedCart.forEach((item) => removeFromCart(item.id))
+  }
 
   const handleGoToPaying = () => {
     navigate('/paying');
@@ -53,7 +59,8 @@ const ShoppingCart: React.FC = () => {
         </div>
         {total > 0 && (
           <div className="btn-pay p-2">
-            <Button onClick={handleGoToPaying} className='css-button-gradient--8'>Go to Pay</Button>
+            <Button onClick={handleGoToPaying} className='css-button-gradient'>Go to Pay</Button>
+            <Button onClick={clearCart} className='css-button-gradient--8'>Clear Cart</Button>
           </div>
         )}
       </div>

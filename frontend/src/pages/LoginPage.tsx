@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
 
       <div className='row mt-4'>
         <div className='col-md-12 text-center'>
-          <Link to="/">Volver a la página de inicio</Link>
+          <Link to="/">Return to Home</Link>
         </div>
       </div>
     </div>
