@@ -7,7 +7,7 @@ describe('Pruebas del modelo de usuarios', () => {
     userModel = new UserModel({} as any)
   })
 
-  it('debería obtener todos los usuarios', async () => {
+  it('obtener todos los usuarios', async () => {
     const mockUsers = [
       { id: '4', email: 'user4@example.com', pass: 'hashed4', is_admin: false },
       { id: '5', email: 'user5@example.com', pass: 'hashed5', is_admin: true },
@@ -19,7 +19,7 @@ describe('Pruebas del modelo de usuarios', () => {
     expect(users).toEqual(mockUsers)
   })
 
-  it('debería obtener un usuario por ID', async () => {
+  it('obtener un usuario por ID', async () => {
     const mockUser = { id: '1', email: 'user1@example.com', pass: 'hashed1', is_admin: false }
     jest.spyOn(userModel, 'getUserById').mockResolvedValueOnce(mockUser)
 
