@@ -5,9 +5,13 @@ import './main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+      <WrappedApp />
+  </React.StrictMode>
+)
 
-
-const enableMocking = async ():Promise<void>  => {
+/*const enableMocking = async ():Promise<void>  => {
   if (process.env.NODE_ENV !== 'development') return
 
   const { worker } = await import('../mocks/browser.js')
@@ -23,4 +27,4 @@ enableMocking()
       </React.StrictMode>,
     )
   })
-  .catch(console.error)
+  .catch(console.error)*/

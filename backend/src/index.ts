@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors';
 import userRoutes from './routes/userRoutes'
 import ordersRoutes from './routes/ordersRoutes'
 import inventoryRoutes from './routes/inventoryRoutes'
@@ -13,6 +14,7 @@ const app = express();
 const PORT = process.env.PORT ?? 3000
 
 app.use(express.json());
+app.use(cors());
 
 // instancias de modelos
 const userModel = new UserModel(db)

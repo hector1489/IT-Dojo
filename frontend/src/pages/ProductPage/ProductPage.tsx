@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductList from '../components/productList/ProductList';
+import { ProductList } from '../../components/index';
 
 const ProductPage: React.FC = () => {
 

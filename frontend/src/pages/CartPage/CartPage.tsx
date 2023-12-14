@@ -1,4 +1,4 @@
-import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
+import { ShoppingCart } from "../../components/index";
 
 const Cart: React.FC = () => {
 

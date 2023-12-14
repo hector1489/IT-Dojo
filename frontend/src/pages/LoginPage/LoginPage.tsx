@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import UserAccount from '../components/UserAccount/UserAccount';
-import SignupAccount from '../components/SignupAccount/SignupAccount';
+import { UserAccount, SignupAccount } from '../../components/index';
 
 const LoginPage: React.FC = () => {
 

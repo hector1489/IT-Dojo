@@ -29,6 +29,7 @@ CREATE TABLE inventory (
     stock     INT,
     user_id   UUID REFERENCES users(id),
     order_id  SERIAL REFERENCES orders(id),
+    url       VARCHAR(255),
     PRIMARY KEY(id)
 );
 
@@ -38,13 +39,5 @@ CREATE TABLE favorites (
     user_id    UUID REFERENCES users(id),
     inventory_id    SERIAL REFERENCES inventory(id),
     added_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(id)
-);
-
-/* Table for storing image URLs */
-CREATE TABLE image_product (
-    id            SERIAL,
-    inventory_id SERIAL REFERENCES inventory(id),
-    url           VARCHAR(255),
     PRIMARY KEY(id)
 );

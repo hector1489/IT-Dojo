@@ -27,11 +27,11 @@ class InventoryModel {
     }
   }
 
-  async createInventory(nombre: string, categoria: string, envio: string, precio: number, stock: number, userId: string): Promise<any> {
+  async createInventory(nombre: string, categoria: string, envio: string, precio: number, stock: number, url: string): Promise<any> {
     try {
       const result: QueryResult = await this.db(
-        'INSERT INTO inventory (name, category, shipping, price, stock, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-        [nombre, categoria, envio, precio, stock, userId]
+        'INSERT INTO inventory (name, category, shipping, price, stock, user_id, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+        [nombre, categoria, envio, precio, stock, url]
       )
       return result.rows[0]
     } catch (error) {
@@ -40,11 +40,11 @@ class InventoryModel {
     }
   }
 
-  async updateInventory(inventoryId: number, nombre: string, categoria: string, envio: string, precio: number, stock: number): Promise<any> {
+  async updateInventory(inventoryId: number, nombre: string, categoria: string, envio: string, precio: number, stock: number, url: string): Promise<any> {
     try {
       const result: QueryResult = await this.db(
-        'UPDATE inventory SET name = $2, category = $3, shipping = $4, price = $5, stock = $6 WHERE id = $1 RETURNING *;',
-        [inventoryId, nombre, categoria, envio, precio, stock]
+        'UPDATE inventory SET name = $2, category = $3, shipping = $4, price = $5, stock = $6, url = $7 WHERE id = $1 RETURNING *;',
+        [inventoryId, nombre, categoria, envio, precio, stock, url]
       )
       return result.rows[0]
     } catch (error) {

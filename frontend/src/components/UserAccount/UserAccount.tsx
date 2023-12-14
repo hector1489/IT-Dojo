@@ -19,7 +19,7 @@ const UserAccount: React.FC<UserAccountProps> = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      login(email, pass);
+      await login(email, pass);
       navigate('/profile');
     } catch (error) {
       console.error('Error during login:', error);

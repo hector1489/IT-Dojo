@@ -1,7 +1,5 @@
 import React from 'react';
-import Gallery from '../components/Carousel/Carousel';
-import ProductList from '../components/productList/ProductList';
-import Footer from '../components/Footer/Footer';
+import { Gallery, ProductList, Footer  } from '../../components/index'
 
 const Home: React.FC = () => {
 

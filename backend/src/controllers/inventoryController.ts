@@ -18,23 +18,23 @@ class InventoryController {
 
   async getInventoryById(inventoryId: number) {
     try {
-      return await this.inventoryModel.getInventoryById(inventoryId)
+      return await this.inventoryModel.getInventoryById(inventoryId);
     } catch (error) {
       throw new Error('Error al obtener elemento del inventario por ID desde el controlador')
     }
   }
 
-  async createInventory(nombre: string, categoria: string, envio: string, precio: number, stock: number, userId: string) {
+  async createInventory(nombre: string, categoria: string, envio: string, precio: number, stock: number, url: string) {
     try {
-      return await this.inventoryModel.createInventory(nombre, categoria, envio, precio, stock, userId)
+      return await this.inventoryModel.createInventory(nombre, categoria, envio, precio, stock, url)
     } catch (error) {
       throw new Error('Error al crear elemento del inventario desde el controlador')
     }
   }
 
-  async updateInventory(inventoryId: number, nombre: string, categoria: string, envio: string, precio: number, stock: number) {
+  async updateInventory(inventoryId: number, nombre: string, categoria: string, envio: string, precio: number, stock: number, url: string) {
     try {
-      return await this.inventoryModel.updateInventory(inventoryId, nombre, categoria, envio, precio, stock)
+      return await this.inventoryModel.updateInventory(inventoryId, nombre, categoria, envio, precio, stock, url)
     } catch (error) {
       throw new Error('Error al actualizar elemento del inventario desde el controlador')
     }
@@ -47,7 +47,6 @@ class InventoryController {
       throw new Error('Error al eliminar elemento del inventario desde el controlador')
     }
   }
-
 }
 
 export default InventoryController

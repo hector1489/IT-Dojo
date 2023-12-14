@@ -3,5 +3,5 @@ import mocksProduct from "./mocksProduct"
 
 export const handlers = [
     ...mockUser,
-    ...mocksProduct
+    ...mocksProduct,
 ]

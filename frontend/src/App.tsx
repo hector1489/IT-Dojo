@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
+import { Navbar,  Details } from './components/index';
 import { Home, LoginPage, UserPage, ProductPage, CartPage, PayingPage } from './pages/index';
 import axios from 'axios';
 import DataContext, { DataContextProps, CartItem } from './context/context';
 import { AuthProvider } from './context/AuthContext';
-import Details from './components/Details/Details';
+import { ENDPOINT } from './config/constans'
 
 interface Product {
   id: string;
@@ -20,10 +20,12 @@ const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [data, setData] = useState<any[]>([]);
   const [shopCart, setShopCart] = useState<CartItem[]>([]);
+  const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
+
 
   useEffect(() => {
     axios
-      .get('products')
+      .get(ENDPOINT.products)
       .then(response => {
         setProducts(response.data);
       })
@@ -77,6 +79,22 @@ const App: React.FC = () => {
     return number.toLocaleString();
   };
 
+  const addToFavorites = async (productId: string, userId: string | null) => {
+    try {
+      await axios.post(`${ENDPOINT.favorite}`, { user_id: userId, inventory_id: productId });
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
+  };
+
+  const removeFromFavorites = async (favoriteId: string) => {
+    try {
+      await axios.delete(`${ENDPOINT.favorite}/${favoriteId}`);
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+    }
+  };
+
   const globalState: DataContextProps = {
     products,
     setProducts,
@@ -84,11 +102,14 @@ const App: React.FC = () => {
     setData,
     shopCart,
     setShopCart,
+    favorites: favoriteProducts,
     addToCart,
     increase,
     decrease,
     removeFromCart,
-    formatNumber
+    formatNumber,
+    removeFromFavorites,
+    addToFavorites
   };
 
   return (

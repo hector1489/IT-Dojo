@@ -7,9 +7,12 @@ import DataContext, { DataContextProps, Product } from '../../context/context';
 const Details: React.FC = () => {
   const { products } = useContext(DataContext) as DataContextProps;
   const { id } = useParams<{ id: string }>();
-  console.log(id);
 
-  const product: Product | undefined = products.find((p) => p.id === id);
+  console.log('All Products:', products);
+
+  const product: Product | undefined = products.filter((p) => p.id.toString() === id)[0];
+
+  console.log('Product:', product);
 
   return (
     <Container className="details-container">
@@ -17,13 +20,13 @@ const Details: React.FC = () => {
         <Row className='product-details'>
           <Col md={6}>
             <h2>Product Details</h2>
-            <h3>{product?.name}</h3>
-            <p>Price: ${product?.price}</p>
-            <p>Category: {product?.category}</p>
-            <p>Stock: {product?.stock}</p>
+            <h3>{product.name}</h3>
+            <p>Price: ${product.price}</p>
+            <p>Category: {product.category}</p>
+            <p>Stock: {product.stock}</p>
           </Col>
           <Col md={6}>
-            <img src={product?.url} alt={product?.name} className="product-image" />
+            <img src={product.url} alt={product.name} className="product-image" />
           </Col>
         </Row>
       )}

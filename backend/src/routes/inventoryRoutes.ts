@@ -33,42 +33,25 @@ const inventoryRoutes = (InventoryModel: InventoryModel): Router => {
     }
   })
 
-
-  // Ruta para obtener un elemento del inventario por ID
-  router.get('/:id', async (req, res) => {
-    const inventoryId = parseInt(req.params.id, 10)
-    try {
-      const inventoryItem = await inventoryController.getInventoryById(inventoryId)
-      if (inventoryItem) {
-        res.json(inventoryItem)
-      } else {
-        res.status(404).json({ error: 'Elemento del inventario no encontrado' })
-      }
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ error: 'Error al obtener elemento del inventario por ID' })
-    }
-  })
-
   // Ruta para agregar un nuevo elemento al inventario
   router.post('/', async (req, res) => {
-    const { nombre, categoria, envio, precio, stock, userId } = req.body;
+    const { nombre, categoria, envio, precio, stock, url } = req.body
 
     try {
-      const newInventoryItem = await inventoryController.createInventory(nombre, categoria, envio, precio, stock, userId);
-      res.status(201).json(newInventoryItem);
+      const newInventoryItem = await inventoryController.createInventory(nombre, categoria, envio, precio, stock, url)
+      res.status(201).json(newInventoryItem)
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al agregar elemento al inventario' });
+      console.error(error)
+      res.status(500).json({ error: 'Error al agregar elemento al inventario' })
     }
-  });
+  })
 
   // Ruta para actualizar un elemento del inventario
   router.put('/:id', async (req, res) => {
     const inventoryId = parseInt(req.params.id, 10)
-    const { nombre, categoria, envio, precio, stock } = req.body
+    const { nombre, categoria, envio, precio, stock, url } = req.body
     try {
-      const updatedInventoryItem = await inventoryController.updateInventory(inventoryId, nombre, categoria, envio, precio, stock)
+      const updatedInventoryItem = await inventoryController.updateInventory(inventoryId, nombre, categoria, envio, precio, stock, url)
       if (updatedInventoryItem) {
         res.json(updatedInventoryItem)
       } else {
@@ -87,7 +70,7 @@ const inventoryRoutes = (InventoryModel: InventoryModel): Router => {
       await inventoryController.deleteInventory(inventoryId)
       res.json({ message: 'Elemento del inventario eliminado exitosamente' })
     } catch (error) {
-      console.error(error)
+      console.error(error);
       res.status(500).json({ error: 'Error al eliminar elemento del inventario' })
     }
   })
