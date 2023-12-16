@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
+export const FRONTEND_URL= process.env.FRONTEND_URL ?? "http://localhost:5173"
+
 const config = {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
