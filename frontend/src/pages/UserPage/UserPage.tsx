@@ -42,7 +42,7 @@ const UserPage: React.FC = () => {
 
   const handleToggleFavorite = (productId: string, user: { id: string } | null) => {
     if (user && user.id) {
-      const userId = user.id;
+      const userId = user?.id;
       if (isFavorite(productId)) {
         removeFromFavorites(productId);
       } else {
@@ -59,7 +59,7 @@ const UserPage: React.FC = () => {
             <h3>
               <span className='fw-bold'> Welcome </span>
               <span className='text-warning fw-bold'> : </span>
-              {user.email}
+              {user?.email}
             </h3>
             <button className='css-button-gradient--7' onClick={logout}>Logout</button>
           </div>
@@ -75,8 +75,8 @@ const UserPage: React.FC = () => {
                 console.log('Product:', product);
 
                 return product ? (
-                  <Card key={product.id} className="product-card">
-                    <Card.Img variant="top" src={product.url} alt={product?.name} />
+                  <Card key={product?.id} className="product-card">
+                    <Card.Img variant="top" src={product?.url} alt={product?.name} />
                     <div className='d-flex justify-content-evenly align-items-center'>
                       <div onClick={() => handleToggleFavorite(product?.id, user)}>
                         <i
