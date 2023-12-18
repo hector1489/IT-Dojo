@@ -41,7 +41,7 @@ const userRoutes = (userModel: UserModel): Router => {
     }
   })
 
-  router.post('/login', verifyToken, async (req, res) => {
+  router.post('/login', async (req, res) => {
     const { email, pass } = req.body
     try {
       const { token, user } = await usersController.login(email, pass)
