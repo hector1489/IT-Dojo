@@ -24,7 +24,6 @@ const ProductList: React.FC<ProductListProps> = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(ENDPOINT.products, {
-          params: { category: filter.toLowerCase() },
         });
         setProducts(response.data);
       } catch (error) {
@@ -33,7 +32,7 @@ const ProductList: React.FC<ProductListProps> = () => {
     };
 
     fetchProducts();
-  }, [filter, setProducts]);
+  }, [setProducts]);
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -66,7 +65,6 @@ const ProductList: React.FC<ProductListProps> = () => {
   };
 
   const handleCategoryFilter = (category: string) => {
-    setFilter(category.toLowerCase());
     setSelectedCategory(category);
   };
 
@@ -110,7 +108,7 @@ const ProductList: React.FC<ProductListProps> = () => {
             <Card.Body>
               <Card.Title className="fw-bold">{product?.name}</Card.Title>
               <Card.Text>${product?.price}</Card.Text>
-              <Card.Text>${product?.category}</Card.Text>
+              <Card.Text>{product?.category}</Card.Text>
               <Button className="css-button-gradient--4" onClick={() => handleAddToCart(product)}>
                 Adhere 🛒
               </Button>
