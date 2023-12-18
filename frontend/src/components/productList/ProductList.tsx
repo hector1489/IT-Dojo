@@ -20,6 +20,7 @@ const ProductList: React.FC<ProductListProps> = () => {
   const [filter, setFilter] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -33,6 +34,8 @@ const ProductList: React.FC<ProductListProps> = () => {
 
     fetchProducts();
   }, [setProducts]);
+
+
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -66,6 +69,7 @@ const ProductList: React.FC<ProductListProps> = () => {
 
   const handleCategoryFilter = (category: string) => {
     setSelectedCategory(category);
+    setFilter('');
   };
 
   return (
@@ -73,7 +77,7 @@ const ProductList: React.FC<ProductListProps> = () => {
       <h2 className="text-center text-uppercase fw-bold p-2">Product List :</h2>
       <div className="filter-container">
         <div className="categories">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryFilter(category)}
@@ -92,7 +96,7 @@ const ProductList: React.FC<ProductListProps> = () => {
         <button onClick={handleClearFilter}>Clear Filter</button>
       </div>
       <div className="card-container p-1">
-        {products?.map((product: Product) => (
+      {products?.map((product: Product)  => (
           <Card key={product?.id} className="product-card">
             <Card.Img variant="top" src={product?.url} alt={product?.name} />
             <div className="d-flex justify-content-evenly align-items-center">
