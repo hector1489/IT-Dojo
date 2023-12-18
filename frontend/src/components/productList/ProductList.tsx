@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ENDPOINT } from '../../config/constans';
 import { useAuth } from '../../context/AuthContext';
 
-interface ProductListProps { }
+interface ProductListProps {}
 
 const categories = ['silla', 'Lampara', 'Escritorio'];
 
@@ -23,10 +23,12 @@ const ProductList: React.FC<ProductListProps> = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(ENDPOINT.products, { params: { category: filter } });
+        const response = await axios.get(ENDPOINT.products, {
+          params: { category: filter.toLowerCase() },
+        });
         setProducts(response.data);
       } catch (error) {
-        console.error('Error al obtener la lista de productos:', error);
+        console.error('Error fetching product list:', error);
       }
     };
 
@@ -55,7 +57,7 @@ const ProductList: React.FC<ProductListProps> = () => {
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
+    setFilter(event.target.value.toLowerCase());
   };
 
   const handleClearFilter = () => {
@@ -63,12 +65,12 @@ const ProductList: React.FC<ProductListProps> = () => {
   };
 
   const handleCategoryFilter = (category: string) => {
-    setFilter(category);
+    setFilter(category.toLowerCase());
   };
 
   return (
     <div className="product-list-container p-2">
-      <h2 className='text-center text-uppercase fw-bold p-2'>Product List :</h2>
+      <h2 className="text-center text-uppercase fw-bold p-2">Product List :</h2>
       <div className="filter-container">
         <div className="categories">
           {categories.map((category) => (
@@ -89,26 +91,24 @@ const ProductList: React.FC<ProductListProps> = () => {
         {products?.map((product: Product) => (
           <Card key={product?.id} className="product-card">
             <Card.Img variant="top" src={product?.url} alt={product?.name} />
-            <div className='d-flex justify-content-evenly align-items-center'>
+            <div className="d-flex justify-content-evenly align-items-center">
               <div onClick={() => handleToggleFavorite(product?.id, user)}>
                 <i
                   className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
                 />
               </div>
               <div onClick={() => handleToggleFavorite(product?.id, user)}>
-                <i
-                  className='fas fa-times fa-xl'
-                />
+                <i className="fas fa-times fa-xl" />
               </div>
             </div>
             <Card.Body>
-              <Card.Title className='fw-bold'>{product?.name}</Card.Title>
+              <Card.Title className="fw-bold">{product?.name}</Card.Title>
               <Card.Text>${product?.price}</Card.Text>
-              <Button className='css-button-gradient--4' onClick={() => handleAddToCart(product)}>
+              <Button className="css-button-gradient--4" onClick={() => handleAddToCart(product)}>
                 Adhere 🛒
               </Button>
               <Button
-                className='css-button-gradient--1 '
+                className="css-button-gradient--1"
                 onClick={() => handleProduct(product?.id)}
               >
                 Details
