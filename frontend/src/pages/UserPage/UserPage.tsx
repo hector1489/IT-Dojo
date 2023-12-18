@@ -60,7 +60,7 @@ const UserPage: React.FC = () => {
             <h3>
               <span className='fw-bold'> Welcome </span>
               <span className='text-warning fw-bold'> : </span>
-              {user?.email}
+              {user.email}
             </h3>
             <button className='css-button-gradient--7' onClick={logout}>Logout</button>
           </div>

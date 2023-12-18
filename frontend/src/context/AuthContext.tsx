@@ -43,6 +43,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const { token, user, id } = response.data;
       setToken(token);
       setUser({ ...user, id });
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify({ ...user, id }));
       setError(null);
     } catch (error) {
       console.error('Error during registration:', error);
