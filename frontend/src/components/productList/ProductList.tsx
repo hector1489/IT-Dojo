@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect,useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './ProductList.css';
 import axios from 'axios';
@@ -24,16 +24,20 @@ const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const [filter, setFilter] = useState<string>('');
+
   useEffect(() => {
-    axios
-      .get(ENDPOINT.products)
-      .then(response => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(ENDPOINT.products, { params: { category: filter } });
         setProducts(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error al obtener la lista de productos:', error);
-      });
-  }, [setProducts]);
+      }
+    };
+
+    fetchProducts();
+  }, [filter, setProducts]);
 
   if (!products || products.length === 0) {
     return <div>No hay productos disponibles</div>;
@@ -60,9 +64,22 @@ const ProductList: React.FC = () => {
     }
   };
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
+
   return (
     <div className="product-list-container p-2">
       <h2 className='text-center text-uppercase fw-bold p-2'>Product List :</h2>
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Filter by category"
+          value={filter}
+          onChange={handleFilterChange}
+        />
+      </div>
       <div className="card-container p-1">
         {products?.map((product: Product) => (
           <Card key={product?.id} className="product-card">

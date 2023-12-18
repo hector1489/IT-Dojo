@@ -7,11 +7,6 @@ export function hashPassword(pass: string): Promise<string> {
   return bcrypt.hash(pass, saltRounds)
 }
 
-export async function comparePassword(plainPass: string, hashedPass: string): Promise<boolean> {
-  try {
-    return await bcrypt.compare(plainPass, hashedPass);
-  } catch (error) {
-    console.error('Error al comparar contraseñas:', error);
-    return false;
-  }
+export function comparePassword(plainPass: string, hashedPass: string): Promise<boolean> {
+  return bcrypt.compare(plainPass, hashedPass)
 }

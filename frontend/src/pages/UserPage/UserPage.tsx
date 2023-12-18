@@ -40,15 +40,12 @@ const UserPage: React.FC = () => {
 
   const isFavorite = (productId: string) => favorites.includes(productId);
 
-  const handleToggleFavorite = (productId: string, user: { id: string } | null) => {
-    if (user && user.id) {
-      const userId = user?.id;
-      if (isFavorite(productId)) {
-        removeFromFavorites(productId);
-      } else {
-        addToFavorites(productId, userId);
-      }
-    }
+  const handleAddToFavorites = (productId: string) => {
+    addToFavorites(productId, user?.id ?? '');
+  };
+
+  const handleRemoveFromFavorites = (productId: string) => {
+    removeFromFavorites(productId);
   };
 
   return (
@@ -78,12 +75,12 @@ const UserPage: React.FC = () => {
                   <Card key={product?.id} className="product-card">
                     <Card.Img variant="top" src={product?.url} alt={product?.name} />
                     <div className='d-flex justify-content-evenly align-items-center'>
-                      <div onClick={() => handleToggleFavorite(product?.id, user)}>
+                      <div onClick={() => handleAddToFavorites(product?.id)}>
                         <i
                           className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
                         />
                       </div>
-                      <div onClick={() => handleToggleFavorite(product?.id, user)}>
+                      <div onClick={() => handleRemoveFromFavorites(product?.id)}>
                         <i
                           className='fas fa-times fa-xl'
                         />
