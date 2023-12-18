@@ -49,7 +49,8 @@ class UsersController {
       if (!user) {
         throw new Error('Usuario no encontrado')
       }
-      const isPasswordValid = await comparePassword(pass, user?.pass)
+      const isPasswordValid = user?.pass ? await comparePassword(pass, user.pass) : false
+      console.log('Password Comparison:', isPasswordValid);
       if (!isPasswordValid) {
         throw new Error('Contraseña incorrecta')
       }
