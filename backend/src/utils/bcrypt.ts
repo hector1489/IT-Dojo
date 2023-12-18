@@ -7,6 +7,6 @@ export function hashPassword(pass: string): Promise<string> {
   return bcrypt.hash(pass, saltRounds)
 }
 
-export function comparePassword(plainPass: string, hashedPass: string): Promise<boolean> {
-  return bcrypt.compare(plainPass, hashedPass)
+export function comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  return bcrypt.compare(plainPassword, hashedPassword)
 }
