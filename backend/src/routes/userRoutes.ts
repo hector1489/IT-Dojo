@@ -41,7 +41,7 @@ const userRoutes = (userModel: UserModel): Router => {
     }
   })
 
-  router.post('/login', async (req, res) => {
+  router.post('/login', verifyToken, async (req, res) => {
     const { email, pass } = req.body
     try {
       const { token, user } = await usersController.login(email, pass)
@@ -56,7 +56,8 @@ const userRoutes = (userModel: UserModel): Router => {
     const userId = req.params.id
     const { email, pass, is_admin } = req.body
     try {
-      const updatedUser = await usersController.updateUser(userId, email, pass, is_admin)
+      const hashedPassword = await hashPassword(pass)
+      const updatedUser = await usersController.updateUser(userId, email, hashedPassword, is_admin)
       res.json(updatedUser || { error: 'Usuario no encontrado' })
     } catch (error) {
       console.error(error)

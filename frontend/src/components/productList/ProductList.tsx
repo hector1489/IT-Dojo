@@ -93,7 +93,7 @@ const ProductList: React.FC<ProductListProps> = () => {
           value={filter}
           onChange={handleFilterChange}
         />
-        <button onClick={handleClearFilter} className='.css-button-gradient'>Clear Filter</button>
+        <button onClick={handleClearFilter} className='css-button-gradient'>Clear Filter</button>
       </div>
       <div className="card-container p-1">
         {products?.map((product: Product) => {
