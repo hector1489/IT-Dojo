@@ -82,6 +82,7 @@ const App: React.FC = () => {
   const addToFavorites = async (productId: string, userId: string | null) => {
     try {
       await axios.post(`${ENDPOINT.favorite}`, { user_id: userId, inventory_id: productId });
+      setFavoriteProducts(prevFavorites => [...prevFavorites, productId]);
     } catch (error) {
       console.error('Error adding to favorites:', error);
     }
@@ -90,6 +91,7 @@ const App: React.FC = () => {
   const removeFromFavorites = async (favoriteId: string) => {
     try {
       await axios.delete(`${ENDPOINT.favorite}/${favoriteId}`);
+      setFavoriteProducts(prevFavorites => prevFavorites.filter(id => id !== favoriteId));
     } catch (error) {
       console.error('Error removing from favorites:', error);
     }

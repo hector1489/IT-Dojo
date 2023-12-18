@@ -19,7 +19,8 @@ const UserAccount: React.FC<UserAccountProps> = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await login(email, pass);
+      const { token } = await login(email, pass);
+      setToken(token);
       navigate('/profile');
     } catch (error) {
       console.error('Error during login:', error);

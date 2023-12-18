@@ -49,17 +49,16 @@ class UsersController {
       if (!user) {
         throw new Error('Usuario no encontrado')
       }
-      const isPasswordValid = user?.pass ? await comparePassword(pass, user?.pass) : false
-      console.log('Password Comparison:', isPasswordValid);
+      const isPasswordValid = user.pass ? await comparePassword(pass, user?.pass) : false
       if (!isPasswordValid) {
         throw new Error('Contraseña incorrecta')
       }
-      const token = jwtSign({ userId: user?.id, email: user?.email })
+      const token = jwtSign({ userId: user.id, email: user?.email })
       console.log('Proceso de autenticación exitoso')
       return { token, user }
     } catch (error) {
       console.error('Error durante la autenticación:', error)
-      throw new Error('Error al autenticar usuario desde el controlador: ')
+      throw new Error('Error al autenticar usuario desde el controlador')
     }
   }
 

@@ -6,7 +6,7 @@ interface AuthContextProps {
   user: { email: string; id: string } | null;
   token: string | null;
   error: string | null;
-  login: (email: string, pass: string) => Promise<void>;
+  login: (email: string, pass: string) => Promise<{ token: string }>;
   logout: () => void;
   signup: (email: string, pass: string) => Promise<void>;
 }
@@ -26,9 +26,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser({ ...user, id });
       localStorage.setItem('token', token);
       setError(null);
+      return { token };
     } catch (error) {
       console.error('Error during login:', error);
-      setError( 'Failed to login. Please try again.');
+      setError('Failed to login. Please try again.');
+      throw error;
     }
   };
 

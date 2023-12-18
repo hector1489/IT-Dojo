@@ -1,23 +1,17 @@
-import { useContext, useEffect,useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './ProductList.css';
 import axios from 'axios';
-import DataContext, { DataContextProps } from '../../context/context';
+import DataContext, { DataContextProps, Product } from '../../context/context';
 import { useNavigate } from 'react-router-dom';
-import { ENDPOINT } from '../../config/constans'
+import { ENDPOINT } from '../../config/constans';
 import { useAuth } from '../../context/AuthContext';
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  stock: number;
-  url: string;
-}
+interface ProductListProps { }
 
+const categories = ['silla', 'Lampara', 'Escritorio'];
 
-const ProductList: React.FC = () => {
+const ProductList: React.FC<ProductListProps> = () => {
   const { products, setProducts, addToCart, addToFavorites, removeFromFavorites, favorites } = useContext(
     DataContext
   ) as DataContextProps;
@@ -38,10 +32,6 @@ const ProductList: React.FC = () => {
 
     fetchProducts();
   }, [filter, setProducts]);
-
-  if (!products || products.length === 0) {
-    return <div>No hay productos disponibles</div>;
-  }
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -68,17 +58,32 @@ const ProductList: React.FC = () => {
     setFilter(event.target.value);
   };
 
+  const handleClearFilter = () => {
+    setFilter('');
+  };
+
+  const handleCategoryFilter = (category: string) => {
+    setFilter(category);
+  };
 
   return (
     <div className="product-list-container p-2">
       <h2 className='text-center text-uppercase fw-bold p-2'>Product List :</h2>
       <div className="filter-container">
+        <div className="categories">
+          {categories.map((category) => (
+            <button key={category} onClick={() => handleCategoryFilter(category)}>
+              {category}
+            </button>
+          ))}
+        </div>
         <input
           type="text"
           placeholder="Filter by category"
           value={filter}
           onChange={handleFilterChange}
         />
+        <button onClick={handleClearFilter}>Clear Filter</button>
       </div>
       <div className="card-container p-1">
         {products?.map((product: Product) => (
