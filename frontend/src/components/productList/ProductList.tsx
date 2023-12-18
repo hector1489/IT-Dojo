@@ -74,7 +74,7 @@ const ProductList: React.FC<ProductListProps> = () => {
 
   return (
     <div className="product-list-container p-2">
-      <h2 className="text-center text-uppercase fw-bold p-2">Product List :</h2>
+      <h2 className="text-center text-uppercase fw-bold p-2">Lista de productos :</h2>
       <div className="filter-container">
         <div className="categories">
           {categories?.map((category) => (
@@ -96,35 +96,43 @@ const ProductList: React.FC<ProductListProps> = () => {
         <button onClick={handleClearFilter}>Clear Filter</button>
       </div>
       <div className="card-container p-1">
-      {products?.map((product: Product)  => (
-          <Card key={product?.id} className="product-card">
-            <Card.Img variant="top" src={product?.url} alt={product?.name} />
-            <div className="d-flex justify-content-evenly align-items-center">
-              <div onClick={() => handleToggleFavorite(product?.id, user)}>
-                <i
-                  className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
-                />
-              </div>
-              <div onClick={() => handleToggleFavorite(product?.id, user)}>
-                <i className="fas fa-times fa-xl" />
-              </div>
-            </div>
-            <Card.Body>
-              <Card.Title className="fw-bold">{product?.name}</Card.Title>
-              <Card.Text>${product?.price}</Card.Text>
-              <Card.Text>{product?.category}</Card.Text>
-              <Button className="css-button-gradient--4" onClick={() => handleAddToCart(product)}>
-                Adhere 🛒
-              </Button>
-              <Button
-                className="css-button-gradient--1"
-                onClick={() => handleProduct(product?.id)}
-              >
-                Details
-              </Button>
-            </Card.Body>
-          </Card>
-        ))}
+        {products?.map((product: Product) => {
+          const isCategoryMatch =
+            selectedCategory === '' || product?.category.toLowerCase() === selectedCategory.toLowerCase();
+          const isFilterMatch = product?.name.toLowerCase().includes(filter);
+          if (isCategoryMatch && isFilterMatch) {
+            return (
+              <Card key={product?.id} className="product-card">
+                <Card.Img variant="top" src={product?.url} alt={product?.name} />
+                <div className="d-flex justify-content-evenly align-items-center">
+                  <div onClick={() => handleToggleFavorite(product?.id, user)}>
+                    <i
+                      className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
+                    />
+                  </div>
+                  <div onClick={() => handleToggleFavorite(product?.id, user)}>
+                    <i className="fas fa-times fa-xl" />
+                  </div>
+                </div>
+                <Card.Body>
+                  <Card.Title className="fw-bold">{product?.name}</Card.Title>
+                  <Card.Text>${product?.price}</Card.Text>
+                  <Card.Text>{product?.category}</Card.Text>
+                  <Button className="css-button-gradient--4" onClick={() => handleAddToCart(product)}>
+                    Agregar 🛒
+                  </Button>
+                  <Button
+                    className="css-button-gradient--1"
+                    onClick={() => handleProduct(product?.id)}
+                  >
+                    Detalles
+                  </Button>
+                </Card.Body>
+              </Card>
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );
