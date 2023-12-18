@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import './UserPage.css'
 
 const UserPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const { products, addToCart, favorites, addToFavorites, removeFromFavorites, } = useContext(DataContext) as DataContextProps;
   const navigate = useNavigate()
@@ -16,7 +16,11 @@ const UserPage: React.FC = () => {
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
-        const response = await axios.get(ENDPOINT.favorite);
+        const response = await axios.get(ENDPOINT.favorite, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log('Favorite Products Response:', response.data);
 
         setFavoriteProducts(response.data);
@@ -28,7 +32,7 @@ const UserPage: React.FC = () => {
     if (user) {
       fetchFavoriteProducts();
     }
-  }, [user]);
+  }, [user, token]);
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
