@@ -25,5 +25,10 @@ export const jwtSign = (data: any): string => {
 
   console.log('Valor de KEY al firmar el token:', KEY)
 
-  return jwt.sign(data, KEY, { expiresIn: '5m' })
+  try {
+    return jwt.sign(data, KEY, { expiresIn: '5m' })
+  } catch (error) {
+    console.error('Error al firmar el token:', error)
+    throw new Error('Error al firmar el token')
+  }
 }

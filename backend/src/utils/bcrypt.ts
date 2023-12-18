@@ -12,6 +12,6 @@ export async function comparePassword(plainPassword: string, hashedPassword: str
     return await bcrypt.compare(plainPassword, hashedPassword)
   } catch (error) {
     console.error('Error al comparar contraseñas:', error)
-    return false
+    throw new Error('Error al comparar contraseñas')
   }
 }
