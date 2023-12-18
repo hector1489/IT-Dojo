@@ -36,6 +36,7 @@ class UserModel {
 
   async getUserByEmail(email: string) {
     try {
+      console.log('getUserByEmail', email)
       const result = await this.db('SELECT * FROM users WHERE email = $1;', [email])
       return result.rows[0]
     } catch (error) {
