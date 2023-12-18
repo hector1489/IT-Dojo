@@ -7,18 +7,18 @@ import { useNavigate } from 'react-router-dom';
 import { ENDPOINT } from '../../config/constans';
 import { useAuth } from '../../context/AuthContext';
 
-interface ProductListProps {}
+interface ProductListProps { }
 
 const categories = ['silla', 'Lampara', 'Escritorio'];
 
 const ProductList: React.FC<ProductListProps> = () => {
-  const { products, setProducts, addToCart, addToFavorites, removeFromFavorites, favorites } = useContext(
-    DataContext
-  ) as DataContextProps;
+  const { products, setProducts, addToCart, addToFavorites, removeFromFavorites, favorites } =
+    useContext(DataContext) as DataContextProps;
   const navigate = useNavigate();
   const { user } = useAuth();
 
   const [filter, setFilter] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,10 +62,12 @@ const ProductList: React.FC<ProductListProps> = () => {
 
   const handleClearFilter = () => {
     setFilter('');
+    setSelectedCategory('');
   };
 
   const handleCategoryFilter = (category: string) => {
     setFilter(category.toLowerCase());
+    setSelectedCategory(category);
   };
 
   return (
@@ -74,7 +76,11 @@ const ProductList: React.FC<ProductListProps> = () => {
       <div className="filter-container">
         <div className="categories">
           {categories.map((category) => (
-            <button key={category} onClick={() => handleCategoryFilter(category)}>
+            <button
+              key={category}
+              onClick={() => handleCategoryFilter(category)}
+              className={selectedCategory === category ? 'selected' : ''}
+            >
               {category}
             </button>
           ))}
@@ -104,6 +110,7 @@ const ProductList: React.FC<ProductListProps> = () => {
             <Card.Body>
               <Card.Title className="fw-bold">{product?.name}</Card.Title>
               <Card.Text>${product?.price}</Card.Text>
+              <Card.Text>${product?.category}</Card.Text>
               <Button className="css-button-gradient--4" onClick={() => handleAddToCart(product)}>
                 Adhere 🛒
               </Button>
