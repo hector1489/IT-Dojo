@@ -46,17 +46,14 @@ class UsersController {
   async login(email: string, pass: string) {
     try {
       const user = await this.userModel.getUserByEmail(email)
-      console.log('Usuario obtenido:', user)
       if (!user) {
         throw new Error('Usuario no encontrado')
       }
       const isPasswordValid = user.pass ? await comparePassword(pass, user.pass) : false
-      console.log('Contraseña válida:', isPasswordValid)
       if (!isPasswordValid) {
         throw new Error('Contraseña incorrecta')
       }
       const token = jwtSign({ userId: user.id, email: user.email })
-      console.log('Proceso de autenticación exitoso')
       return { token, user }
     } catch (error) {
       console.error('Error durante la autenticación:', error)

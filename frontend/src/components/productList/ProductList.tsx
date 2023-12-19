@@ -12,7 +12,7 @@ interface ProductListProps { }
 const categories = ['silla', 'Lampara', 'Escritorio'];
 
 const ProductList: React.FC<ProductListProps> = () => {
-  const { products, setProducts, addToCart, addToFavorites, removeFromFavorites, favorites } =
+  const { products, setProducts, addToCart, addToFavorites, removeFromFavorites, } =
     useContext(DataContext) as DataContextProps;
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -41,22 +41,22 @@ const ProductList: React.FC<ProductListProps> = () => {
     addToCart(product);
   };
 
-  const handleProduct = (id: string) => {
+  const handleProduct = (id: number) => {
     navigate(`/details/${id}`);
   };
 
-  const isFavorite = (productId: string) => favorites.includes(productId);
+  const isFavorite = (productId: number) => (productId);
 
-  const handleToggleFavorite = (productId: string, user: { id: string } | null) => {
-    if (user && user.id) {
-      const userId = user.id;
-      if (isFavorite(productId)) {
-        removeFromFavorites(productId);
-      } else {
-        addToFavorites(productId, userId);
-      }
+const handleToggleFavorite = (productId: number, user: { id: string } | null) => {
+  if (user && user.id) {
+    const userId = user.id;
+    if (isFavorite(productId)) {
+      removeFromFavorites(productId);
+    } else {
+      addToFavorites(productId, userId);
     }
-  };
+  }
+};
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(event.target.value.toLowerCase());

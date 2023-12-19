@@ -1,13 +1,13 @@
 import { createContext } from "react";
 
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   price: number;
   category: string;
   stock: number;
   url: string;
-  inventory_id?: string;
+  inventory_id?: number;
 }
 
 export interface AuthContextProps {
@@ -17,7 +17,7 @@ export interface AuthContextProps {
 }
 
 export interface CartItem {
-  id: string;
+  id: number;
   name: string;
   price: number;
   count: number;
@@ -25,7 +25,7 @@ export interface CartItem {
 }
 
 export interface Favorite {
-  id: string;
+  id: number;
   user_id: string;
   inventory_id: number;
 }
@@ -37,14 +37,13 @@ export interface DataContextProps {
   setData: React.Dispatch<React.SetStateAction<any[]>>;
   shopCart: CartItem[];
   setShopCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
-  favorites: string[];
   addToCart: (product: Product) => void;
-  increase: (productId: string) => void;
-  decrease: (productId: string) => void;
-  removeFromCart: (productId: string) => void;
+  increase: (productId: number) => void;
+  decrease: (productId: number) => void;
+  removeFromCart: (productId: number) => void;
   formatNumber: (number: number) => string;
-  addToFavorites: (productId: string, userId: string | null) => void;
-  removeFromFavorites: (productId: string) => void;
+  addToFavorites: (productId: number, userId: string | null) => void;
+  removeFromFavorites: (productId: number) => void;
 }
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);

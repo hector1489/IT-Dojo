@@ -8,7 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ENDPOINT } from './config/constans'
 
 interface Product {
-  id: string;
+  id: number;
   name: string;
   price: number;
   category: string;
@@ -20,7 +20,6 @@ const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [data, setData] = useState<any[]>([]);
   const [shopCart, setShopCart] = useState<CartItem[]>([]);
-  const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const App: React.FC = () => {
     });
   };
 
-  const increase = (productId: string) => {
+  const increase = (productId: number) => {
     setShopCart(prevShopCart =>
       prevShopCart.map(item =>
         item.id === productId ? { ...item, count: item.count + 1 } : item
@@ -59,7 +58,7 @@ const App: React.FC = () => {
     );
   };
 
-  const decrease = (productId: string) => {
+  const decrease = (productId: number) => {
     setShopCart(prevShopCart => {
       const updatedCart = prevShopCart.map(item =>
         item.id === productId ? { ...item, count: item.count - 1 } : item
@@ -69,7 +68,7 @@ const App: React.FC = () => {
     });
   };
 
-  const removeFromCart = (productId: string) => {
+  const removeFromCart = (productId: number) => {
     setShopCart(prevShopCart =>
       prevShopCart.filter(item => item.id !== productId)
     );
@@ -79,19 +78,17 @@ const App: React.FC = () => {
     return number.toLocaleString();
   };
 
-  const addToFavorites = async (productId: string, userId: string | null) => {
+  const addToFavorites = async (productId: number, userId: string | null) => {
     try {
       await axios.post(`${ENDPOINT.favorite}`, { user_id: userId, inventory_id: productId });
-      setFavoriteProducts(prevFavorites => [...prevFavorites, productId]);
     } catch (error) {
       console.error('Error adding to favorites:', error);
     }
   };
 
-  const removeFromFavorites = async (favoriteId: string) => {
+  const removeFromFavorites = async (favoriteId: number) => {
     try {
       await axios.delete(`${ENDPOINT.favorite}/${favoriteId}`);
-      setFavoriteProducts(prevFavorites => prevFavorites.filter(id => id !== favoriteId));
     } catch (error) {
       console.error('Error removing from favorites:', error);
     }
@@ -104,7 +101,6 @@ const App: React.FC = () => {
     setData,
     shopCart,
     setShopCart,
-    favorites: favoriteProducts,
     addToCart,
     increase,
     decrease,

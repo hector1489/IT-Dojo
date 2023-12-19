@@ -4,7 +4,7 @@ import userRoutes from './routes/userRoutes'
 import ordersRoutes from './routes/ordersRoutes'
 import inventoryRoutes from './routes/inventoryRoutes'
 import favoriteRoutes from './routes/favoriteRoutes'
-import db, { FRONTEND_URL } from './database/db'
+import db from './database/db'
 import UserModel from './models/userModel'
 import InventoryModel from './models/inventoryModel'
 import OrdersModel from './models/ordersModel'
@@ -14,10 +14,7 @@ const app = express();
 const PORT = process.env.PORT ?? 3000
 
 app.use(express.json());
-app.use(cors({
-  origin: FRONTEND_URL,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-}));
+app.use(cors());
 
 // instancias de modelos
 const userModel = new UserModel(db)

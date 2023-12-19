@@ -37,7 +37,7 @@ class UserModel {
   async getUserByEmail(email: string) {
     try {
       console.log('getUserByEmail', email)
-      const result = await this.db('SELECT * FROM users WHERE email = $1;', [email])
+      const result = await this.db('SELECT * FROM users WHERE email = $1;', [email.trim()])
       return result.rows[0]
     } catch (error) {
       console.error('Error al obtener usuario por correo electrónico:', error)
@@ -51,10 +51,10 @@ class UserModel {
         'INSERT INTO users (email, pass, is_admin) VALUES ($1, $2, $3) RETURNING *;',
         [email, pass, is_admin]
       )
-      return result.rows[0];
+      return result.rows[0]
     } catch (error) {
-      console.error('Error al crear usuario:', error);
-      throw new Error('Error al crear usuario desde el modelo');
+      console.error('Error al crear usuario:', error)
+      throw new Error('Error al crear usuario desde el modelo')
     }
   }
 

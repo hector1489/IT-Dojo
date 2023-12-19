@@ -12,18 +12,20 @@ const UserPage: React.FC = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const { products, addToCart, favorites, addToFavorites, removeFromFavorites, } = useContext(DataContext) as DataContextProps;
   const navigate = useNavigate()
-
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
-        const response = await axios.get(ENDPOINT.favorite, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('Favorite Products Response:', response.data);
+        if (user) {
+          const response = await axios.get(`${ENDPOINT.favorite}/${user.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        setFavoriteProducts(response.data);
+          console.log('Favorite Products Response:', response.data);
+
+          setFavoriteProducts(response.data);
+        }
       } catch (error) {
         console.error('Error fetching favorite products:', error);
       }

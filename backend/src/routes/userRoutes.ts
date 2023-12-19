@@ -1,7 +1,6 @@
 import express, { Router } from 'express'
 import UserModel from '../models/userModel'
 import UsersController from '../controllers/usersController'
-import { hashPassword } from '../utils/bcrypt'
 import { verifyToken } from '../middleware/event.middleware'
 
 const userRoutes = (userModel: UserModel): Router => {
@@ -32,9 +31,8 @@ const userRoutes = (userModel: UserModel): Router => {
   router.post('/signup', async (req, res) => {
     const { email, pass, is_admin } = req.body
     try {
-      const hashedPassword = await hashPassword(pass)
-      const newUser = await usersController.createUser(email, hashedPassword, is_admin)
-      res.status(201).json(newUser)
+      const newUser = await usersController.createUser(email, pass, is_admin)
+      res.status(201).json({ message: 'Usuario creado exitosamente', userId: newUser.id, email: newUser.email })
     } catch (error) {
       console.error(error)
       res.status(500).json({ error: 'Error al crear usuario' })
@@ -44,8 +42,8 @@ const userRoutes = (userModel: UserModel): Router => {
   router.post('/login', async (req, res) => {
     const { email, pass } = req.body
     try {
-      const { token, user } = await usersController.login(email, pass)
-      res.json({ token, user })
+      const { user, token } = await usersController.login(email, pass)
+      res.json({ user, token })
     } catch (error) {
       console.error(error)
       res.status(401).json({ error: 'Credenciales inválidas' })
@@ -56,8 +54,7 @@ const userRoutes = (userModel: UserModel): Router => {
     const userId = req.params.id
     const { email, pass, is_admin } = req.body
     try {
-      const hashedPassword = await hashPassword(pass)
-      const updatedUser = await usersController.updateUser(userId, email, hashedPassword, is_admin)
+      const updatedUser = await usersController.updateUser(userId, email, pass, is_admin)
       res.json(updatedUser || { error: 'Usuario no encontrado' })
     } catch (error) {
       console.error(error)

@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-export const FRONTEND_URL= process.env.FRONTEND_URL ?? "http://localhost:5173"
+export const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:5173"
 
 const config = {
   user: process.env.DB_USER,
@@ -19,6 +19,8 @@ const pool = new Pool(config)
 const db = async (query: string, values: any[]): Promise<QueryResult<any>> => {
   try {
     const result: QueryResult = await pool.query(query, values)
+    console.log(query, values)
+    console.log(result)
     return result
   } catch (error) {
     console.error(error)

@@ -19,7 +19,7 @@ class FavoriteModel {
 
   async getFavoriteById(favoriteId: string): Promise<any> {
     try {
-      const result: QueryResult = await this.db('SELECT * FROM favorites WHERE id = $1;', [favoriteId])
+      const result: QueryResult = await this.db('SELECT * FROM favorites WHERE user_id = $1;', [favoriteId])
       return result.rows[0]
     } catch (error) {
       console.error(error)
@@ -28,6 +28,7 @@ class FavoriteModel {
   }
 
   async createFavorite(userId: string, inventoryId: number): Promise<any> {
+    console.log(userId, inventoryId)
     try {
       const result: QueryResult = await this.db(
         'INSERT INTO favorites (user_id, inventory_id) VALUES ($1, $2) RETURNING *;',
