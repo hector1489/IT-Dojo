@@ -6,11 +6,13 @@ import DataContext, { DataContextProps, Product } from '../../context/context';
 
 const Details: React.FC = () => {
   const { products } = useContext(DataContext) as DataContextProps;
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
 
   console.log('All Products:', products);
 
-  const product: Product | undefined = products.filter((p) => p.id.toString() === id)[0];
+  const productId = id ? parseInt(id, 10) : undefined;
+  const product: Product | undefined = productId ? products.find((p) => p.id === productId) : undefined;
+
 
   console.log('Product:', product);
 

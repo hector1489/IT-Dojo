@@ -10,7 +10,7 @@ import './UserPage.css'
 const UserPage: React.FC = () => {
   const { user, logout, token } = useAuth();
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
-  const { products, addToCart, favorites, addToFavorites, removeFromFavorites, } = useContext(DataContext) as DataContextProps;
+  const { products, addToCart, addToFavorites, removeFromFavorites, } = useContext(DataContext) as DataContextProps;
   const navigate = useNavigate()
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
@@ -40,17 +40,17 @@ const UserPage: React.FC = () => {
     addToCart(product);
   };
 
-  const handleProduct = (id: string) => {
+  const handleProduct = (id: number) => {
     navigate(`/details/${id}`)
   }
 
-  const isFavorite = (productId: string) => favorites.includes(productId);
+  const isFavorite = (productId: number) => (productId);
 
-  const handleAddToFavorites = (productId: string) => {
+  const handleAddToFavorites = (productId: number) => {
     addToFavorites(productId, user?.id ?? '');
   };
 
-  const handleRemoveFromFavorites = (productId: string) => {
+  const handleRemoveFromFavorites = (productId: number) => {
     removeFromFavorites(productId);
   };
 
