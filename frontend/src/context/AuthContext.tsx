@@ -14,8 +14,11 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<{ email: string; id: string } | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token') ?? null);
+  const [user, setUser] = useState<{ email: string; id: string } | null>(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token') ?? null);
   const [error, setError] = useState<string | null>(null);
 
   const login = async (email: string, pass: string) => {
@@ -23,10 +26,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const response = await axios.post(ENDPOINT.login, { email, pass });
       const { token } = response.data;
       setToken(token);
-      const user = response.data.user;
-      setUser({ ...user });
-
+      const userData = response.data.user;
+      setUser(userData);
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(userData));
       setError(null);
       return { token };
     } catch (error) {

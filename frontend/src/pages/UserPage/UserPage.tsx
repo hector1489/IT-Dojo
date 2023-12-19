@@ -24,7 +24,7 @@ const UserPage: React.FC = () => {
 
           console.log('Favorite Products Response:', response.data);
 
-          setFavoriteProducts(response.data);
+          setFavoriteProducts(response.data || []);
         }
       } catch (error) {
         console.error('Error fetching favorite products:', error);
@@ -36,22 +36,26 @@ const UserPage: React.FC = () => {
     }
   }, [user, token]);
 
+  const associatedProducts: Product[] = Array.isArray(favoriteProducts)
+  ? favoriteProducts
+      .filter((favoriteProduct) =>
+        products.some((product) => product?.id === favoriteProduct?.inventory_id)
+      )
+      .map((favoriteProduct) =>
+        products.find((product) => product?.id === favoriteProduct?.inventory_id)!
+      )
+  : [];
+
+  console.log('All Products:', products);
+  console.log('Associated Products:', associatedProducts);
+
+
   const handleAddToCart = (product: Product) => {
     addToCart(product);
   };
 
   const handleProduct = (id: number) => {
-    navigate(`/details/${id}`)
-  }
-
-  const isFavorite = (productId: number) => (productId);
-
-  const handleAddToFavorites = (productId: number) => {
-    addToFavorites(productId, user?.id ?? '');
-  };
-
-  const handleRemoveFromFavorites = (productId: number) => {
-    removeFromFavorites(productId);
+    navigate(`/details/${id}`);
   };
 
   return (
@@ -72,42 +76,40 @@ const UserPage: React.FC = () => {
               <span className='text-success fw-bold'> : </span>
             </h3>
             <div className="card-container p-1">
-              {favoriteProducts?.map((favoriteProduct) => {
-                const product = products.find((p) => p.id === favoriteProduct.inventory_id);
-
-                console.log('Product:', product);
-
-                return product ? (
+              {associatedProducts && associatedProducts.length > 0 ? (
+                associatedProducts.map((product) => (
                   <Card key={product?.id} className="product-card">
                     <Card.Img variant="top" src={product?.url} alt={product?.name} />
-                    <div className='d-flex justify-content-evenly align-items-center'>
-                      <div onClick={() => handleAddToFavorites(product?.id)}>
-                        <i
-                          className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
-                        />
+                    <div className="d-flex justify-content-evenly align-items-center">
+                      <div onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}>
+                        <i className="fas fa-heart fa-xl" />
                       </div>
-                      <div onClick={() => handleRemoveFromFavorites(product?.id)}>
-                        <i
-                          className='fas fa-times fa-xl'
-                        />
+                      <div onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}>
+                        <i className="fas fa-times fa-xl" />
                       </div>
                     </div>
                     <Card.Body>
-                      <Card.Title>{product?.name}</Card.Title>
+                      <Card.Title className="fw-bold">{product?.name}</Card.Title>
                       <Card.Text>${product?.price}</Card.Text>
-                      <Button className='css-button-gradient--4' onClick={() => handleAddToCart(product)}>
-                        Adhere 🛒
+                      <Card.Text>{product?.category}</Card.Text>
+                      <Button
+                        className="css-button-gradient--4"
+                        onClick={() => product && handleAddToCart(product)}
+                      >
+                        Agregar 🛒
                       </Button>
                       <Button
-                        className='css-button-gradient--1'
-                        onClick={() => handleProduct(product?.id)}
+                        className="css-button-gradient--1"
+                        onClick={() => product?.id && handleProduct(product?.id)}
                       >
-                        Details
+                        Detalles
                       </Button>
                     </Card.Body>
                   </Card>
-                ) : null;
-              })}
+                ))
+              ) : (
+                <p>No favorite products found.</p>
+              )}
             </div>
           </div>
         </div>

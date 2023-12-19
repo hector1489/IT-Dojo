@@ -27,12 +27,11 @@ class FavoriteModel {
     }
   }
 
-  async createFavorite(userId: string, inventoryId: number): Promise<any> {
-    console.log(userId, inventoryId)
+  async createFavorite(user_id: string, inventory_id: number): Promise<any> {
     try {
       const result: QueryResult = await this.db(
         'INSERT INTO favorites (user_id, inventory_id) VALUES ($1, $2) RETURNING *;',
-        [userId, inventoryId]
+        [user_id, inventory_id]
       )
       return result.rows[0]
     } catch (error) {
@@ -41,9 +40,9 @@ class FavoriteModel {
     }
   }
 
-  async deleteFavorite(favoriteId: string): Promise<void> {
+  async deleteFavorite(userId: string, inventoryId: number): Promise<void> {
     try {
-      await this.db('DELETE FROM favorites WHERE id = $1;', [favoriteId])
+      await this.db('DELETE FROM favorites WHERE user_id = $1 AND inventory_id = $2;', [userId, inventoryId])
     } catch (error) {
       console.error(error)
       throw new Error('Error al eliminar favorito')

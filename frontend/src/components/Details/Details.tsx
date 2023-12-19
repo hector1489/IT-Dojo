@@ -14,8 +14,6 @@ const Details: React.FC = () => {
   const product: Product | undefined = productId ? products.find((p) => p.id === productId) : undefined;
 
 
-  console.log('Product:', product);
-
   return (
     <Container className="details-container">
       {product && (

@@ -23,17 +23,17 @@ class FavoriteController {
     }
   }
 
-  async createFavorite(userId: string, inventoryId: number) {
+  async createFavorite(user_id: string, inventory_id: number) {
     try {
-      return await this.favoriteModel.createFavorite(userId, inventoryId)
+      return await this.favoriteModel.createFavorite(user_id, inventory_id)
     } catch (error) {
       throw new Error('Error al crear favorito desde el controlador')
     }
   }
 
-  async deleteFavorite(favoriteId: string) {
+  async deleteFavorite(userId: string, inventoryId: number) {
     try {
-      await this.favoriteModel.deleteFavorite(favoriteId)
+      await this.favoriteModel.deleteFavorite(userId, inventoryId)
     } catch (error) {
       throw new Error('Error al eliminar favorito desde el controlador')
     }

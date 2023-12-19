@@ -43,7 +43,7 @@ export interface DataContextProps {
   removeFromCart: (productId: number) => void;
   formatNumber: (number: number) => string;
   addToFavorites: (productId: number, userId: string | null) => void;
-  removeFromFavorites: (productId: number) => void;
+  removeFromFavorites: (productId: number, userId: string | null) => void;
 }
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);

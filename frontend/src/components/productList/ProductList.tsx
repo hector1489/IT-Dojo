@@ -45,18 +45,6 @@ const ProductList: React.FC<ProductListProps> = () => {
     navigate(`/details/${id}`);
   };
 
-  const isFavorite = (productId: number) => (productId);
-
-const handleToggleFavorite = (productId: number, user: { id: string } | null) => {
-  if (user && user.id) {
-    const userId = user.id;
-    if (isFavorite(productId)) {
-      removeFromFavorites(productId);
-    } else {
-      addToFavorites(productId, userId);
-    }
-  }
-};
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(event.target.value.toLowerCase());
@@ -105,12 +93,10 @@ const handleToggleFavorite = (productId: number, user: { id: string } | null) =>
               <Card key={product?.id} className="product-card">
                 <Card.Img variant="top" src={product?.url} alt={product?.name} />
                 <div className="d-flex justify-content-evenly align-items-center">
-                  <div onClick={() => handleToggleFavorite(product?.id, user)}>
-                    <i
-                      className={`fas fa-heart fa-xl ${isFavorite(product?.id) ? 'active' : ''}`}
-                    />
+                  <div onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}>
+                    <i className="fas fa-heart fa-xl" />
                   </div>
-                  <div onClick={() => handleToggleFavorite(product?.id, user)}>
+                  <div onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}>
                     <i className="fas fa-times fa-xl" />
                   </div>
                 </div>
