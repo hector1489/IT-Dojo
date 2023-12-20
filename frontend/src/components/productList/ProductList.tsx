@@ -63,13 +63,13 @@ const ProductList: React.FC<ProductListProps> = () => {
   return (
     <div className="product-list-container p-2">
       <h2 className="text-center text-uppercase fw-bold p-2">Lista de productos :</h2>
-      <div className="filter-container">
-        <div className="categories">
+      <div className="filter-container d-flex">
+        <div className="Categories p-2">
           {categories?.map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryFilter(category)}
-              className={selectedCategory === category ? 'selected' : ''}
+              className={` ${selectedCategory === category ? 'selected' : ''} me-1`}
             >
               {category}
             </button>
@@ -83,7 +83,7 @@ const ProductList: React.FC<ProductListProps> = () => {
         />
         <button onClick={handleClearFilter} className='css-button-gradient p-1'>Clear Filter</button>
       </div>
-      <div className="card-container p-1">
+      <div className="card-container p-4">
         {products?.map((product: Product) => {
           const isCategoryMatch =
             selectedCategory === '' || product?.category.toLowerCase() === selectedCategory.toLowerCase();
@@ -92,13 +92,19 @@ const ProductList: React.FC<ProductListProps> = () => {
             return (
               <Card key={product?.id} className="product-card">
                 <Card.Img variant="top" src={product?.url} alt={product?.name} />
-                <div className="d-flex justify-content-evenly align-items-center">
-                  <div onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}>
+                <div className="box-icons d-flex">
+                  <Button
+                  className="bg-dark"
+                  onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}
+                  >
                     <i className="fas fa-heart fa-xl" />
-                  </div>
-                  <div onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}>
+                  </Button>
+                  <Button
+                  className='bg-warning'
+                  onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}
+                  >
                     <i className="fas fa-times fa-xl" />
-                  </div>
+                  </Button>
                 </div>
                 <Card.Body>
                   <Card.Title className="fw-bold">{product?.name}</Card.Title>

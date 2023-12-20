@@ -36,19 +36,11 @@ const UserPage: React.FC = () => {
     }
   }, [user, token]);
 
-  const associatedProducts: Product[] = Array.isArray(favoriteProducts)
-  ? favoriteProducts
-      .filter((favoriteProduct) =>
-        products.some((product) => product?.id === favoriteProduct?.inventory_id)
-      )
-      .map((favoriteProduct) =>
-        products.find((product) => product?.id === favoriteProduct?.inventory_id)!
-      )
+  const associatedProducts = Array.isArray(favoriteProducts)
+  ? products.filter((product) =>
+      favoriteProducts.some((favoriteProduct) => product?.id === favoriteProduct?.inventory_id)
+    )
   : [];
-
-  console.log('All Products:', products);
-  console.log('Associated Products:', associatedProducts);
-
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -77,16 +69,22 @@ const UserPage: React.FC = () => {
             </h3>
             <div className="card-container p-1">
               {associatedProducts && associatedProducts.length > 0 ? (
-                associatedProducts.map((product) => (
+                associatedProducts?.map((product) => (
                   <Card key={product?.id} className="product-card">
                     <Card.Img variant="top" src={product?.url} alt={product?.name} />
-                    <div className="d-flex justify-content-evenly align-items-center">
-                      <div onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}>
+                    <div className=" box-icon d-flex">
+                      <Button
+                        className='bg-dark'
+                        onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}
+                      >
                         <i className="fas fa-heart fa-xl" />
-                      </div>
-                      <div onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}>
+                      </Button>
+                      <Button
+                        className='bg-warning'
+                        onClick={() => removeFromFavorites(product?.id ?? 0, user?.id ?? '')}
+                      >
                         <i className="fas fa-times fa-xl" />
-                      </div>
+                      </Button>
                     </div>
                     <Card.Body>
                       <Card.Title className="fw-bold">{product?.name}</Card.Title>

@@ -44,6 +44,14 @@
     margin-top: 10px;
 }
 
+.box-icons {
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+
 .css-button-gradient--4 {
     min-width: 130px;
     height: 40px;
@@ -118,3 +126,10 @@
 .css-button-gradient:active {
     top: 2px;
 }
+
+.filter-container {
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
