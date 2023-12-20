@@ -24,8 +24,7 @@ const ProductList: React.FC<ProductListProps> = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(ENDPOINT.products, {
-        });
+        const response = await axios.get(ENDPOINT.products);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching product list:', error);

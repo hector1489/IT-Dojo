@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 import { ENDPOINT } from '../../config/constans';
@@ -8,39 +8,34 @@ import { useNavigate } from 'react-router-dom';
 import './UserPage.css'
 
 const UserPage: React.FC = () => {
-  const { user, logout, token } = useAuth();
-  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
-  const { products, addToCart, addToFavorites, removeFromFavorites, } = useContext(DataContext) as DataContextProps;
+  const { user, logout } = useAuth();
+  const { products, addToCart, addToFavorites, removeFromFavorites, favoriteProducts, setFavoriteProducts } = useContext(DataContext) as DataContextProps;
   const navigate = useNavigate()
+
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
-      try {
-        if (user) {
-          const response = await axios.get(`${ENDPOINT.favorite}/${user.id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          console.log('Favorite Products Response:', response.data);
-
-          setFavoriteProducts(response.data || []);
-        }
-      } catch (error) {
-        console.error('Error fetching favorite products:', error);
-      }
+       try {
+          const response = await axios.get(ENDPOINT.favorite);
+          if (setFavoriteProducts) {
+             setFavoriteProducts(response.data);
+             console.log(response.data)
+          }
+       } catch (error) {
+          console.error('Error fetching product list:', error);
+       }
     };
 
-    if (user) {
-      fetchFavoriteProducts();
-    }
-  }, [user, token]);
+    fetchFavoriteProducts();
+ }, [setFavoriteProducts]);
+
 
   const associatedProducts = Array.isArray(favoriteProducts)
   ? products.filter((product) =>
-      favoriteProducts.some((favoriteProduct) => product?.id === favoriteProduct?.inventory_id)
+  favoriteProducts.some((favoriteProducts) => product?.id == favoriteProducts?.inventory_id)
     )
   : [];
+
+  console.log('Context favoriteProducts:', favoriteProducts);
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);

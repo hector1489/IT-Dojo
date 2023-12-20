@@ -18,6 +18,7 @@ interface Product {
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [data, setData] = useState<any[]>([]);
   const [shopCart, setShopCart] = useState<CartItem[]>([]);
 
@@ -107,7 +108,9 @@ const App: React.FC = () => {
     removeFromCart,
     formatNumber,
     removeFromFavorites,
-    addToFavorites
+    addToFavorites,
+    favoriteProducts,
+    setFavoriteProducts
   };
 
   return (

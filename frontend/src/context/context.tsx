@@ -24,7 +24,7 @@ export interface CartItem {
   url: string;
 }
 
-export interface Favorite {
+export interface FavoriteProduct {
   id: number;
   user_id: string;
   inventory_id: number;
@@ -44,6 +44,8 @@ export interface DataContextProps {
   formatNumber: (number: number) => string;
   addToFavorites: (productId: number, userId: string | null) => void;
   removeFromFavorites: (productId: number, userId: string | null) => void;
+  favoriteProducts:Product[];
+  setFavoriteProducts:React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
