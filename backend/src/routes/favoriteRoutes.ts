@@ -49,7 +49,6 @@ const favoriteRoutes = (FavoriteModel: FavoriteModel): Router => {
   // Ruta para eliminar un favorito
   router.delete('/', async (req, res) => {
     const { user_id, inventory_id } = req.body
-    console.log(req.body)
     try {
       const inventoryIdNumber = Number(inventory_id)
 

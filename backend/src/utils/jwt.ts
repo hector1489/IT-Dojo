@@ -23,8 +23,6 @@ export const jwtSign = (data: any): string => {
     throw new Error('JWT_SECRET no está definido o es nulo')
   }
 
-  console.log('Valor de KEY al firmar el token:', KEY)
-
   try {
     return jwt.sign(data, KEY, { expiresIn: '5m' })
   } catch (error) {

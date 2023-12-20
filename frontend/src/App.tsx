@@ -90,6 +90,8 @@ const App: React.FC = () => {
   const removeFromFavorites = async (productId: number, userId: string | null) => {
     try {
       await axios.delete(`${ENDPOINT.favorite}`, {data: { user_id: userId, inventory_id: productId } });
+      const response = await axios.get(ENDPOINT.favorite);
+      setFavoriteProducts(response.data);
     } catch (error) {
       console.error('Error removing from favorites:', error);
     }

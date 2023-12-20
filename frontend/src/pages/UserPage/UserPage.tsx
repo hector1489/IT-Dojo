@@ -14,28 +14,27 @@ const UserPage: React.FC = () => {
 
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
-       try {
-          const response = await axios.get(ENDPOINT.favorite);
-          if (setFavoriteProducts) {
-             setFavoriteProducts(response.data);
-             console.log(response.data)
-          }
-       } catch (error) {
-          console.error('Error fetching product list:', error);
-       }
+      try {
+        const response = await axios.get(ENDPOINT.favorite);
+        if (setFavoriteProducts) {
+          setFavoriteProducts(response.data);
+          console.log(response.data)
+        }
+      } catch (error) {
+        console.error('Error fetching product list:', error);
+      }
     };
 
     fetchFavoriteProducts();
- }, [setFavoriteProducts]);
+  }, [setFavoriteProducts]);
 
 
   const associatedProducts = Array.isArray(favoriteProducts)
-  ? products.filter((product) =>
-  favoriteProducts.some((favoriteProducts) => product?.id == favoriteProducts?.inventory_id)
+    ? products.filter((product) =>
+      favoriteProducts.some((favoriteProducts) => product?.id == favoriteProducts?.inventory_id)
     )
-  : [];
+    : [];
 
-  console.log('Context favoriteProducts:', favoriteProducts);
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -67,7 +66,7 @@ const UserPage: React.FC = () => {
                 associatedProducts?.map((product) => (
                   <Card key={product?.id} className="product-card">
                     <Card.Img variant="top" src={product?.url} alt={product?.name} />
-                    <div className=" box-icon d-flex">
+                    <div className="box-icons d-flex">
                       <Button
                         className='bg-dark'
                         onClick={() => addToFavorites(product?.id ?? 0, user?.id ?? '')}

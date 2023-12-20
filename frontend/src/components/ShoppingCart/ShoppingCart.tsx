@@ -29,7 +29,10 @@ const ShoppingCart: React.FC = () => {
   return (
     <div className="box-cart">
       <div className="p-2">
-        <h2 className='text-uppercase fw-bold'>Order details:</h2>
+      <h2 className="text-center text-uppercase fw-bold p-2">
+        Order Details
+       <span className='text-warning fw-bold'> : </span>
+      </h2>
       </div>
       <div className="box-cart-ul p-1 bg-dark">
         <ul className="cart-ul">

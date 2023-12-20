@@ -29,7 +29,7 @@ const UserAccount: React.FC<UserAccountProps> = () => {
   };
 
   return (
-    <div className="box-login">
+    <div className="box-login d-flex justify-content-center">
       <Form onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className="fw-bold text-uppercase">Login</Form.Label>

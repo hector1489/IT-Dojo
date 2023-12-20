@@ -61,17 +61,20 @@ const ProductList: React.FC<ProductListProps> = () => {
 
   return (
     <div className="product-list-container p-2">
-      <h2 className="text-center text-uppercase fw-bold p-2">Lista de productos :</h2>
+      <h2 className="text-center text-uppercase fw-bold p-2">
+        Product List
+       <span className='text-success fw-bold'> : </span>
+      </h2>
       <div className="filter-container d-flex">
         <div className="Categories p-2">
           {categories?.map((category) => (
-            <button
+            <Button
               key={category}
               onClick={() => handleCategoryFilter(category)}
-              className={` ${selectedCategory === category ? 'selected' : ''} me-1`}
+              className={` ${selectedCategory === category ? 'selected' : ''} m-1`}
             >
               {category}
-            </button>
+            </Button>
           ))}
         </div>
         <input
