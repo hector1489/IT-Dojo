@@ -1,7 +1,7 @@
 .box-login {
-    width: 30rem;
+    width: 80%;
     color: #fff;
-    padding:10px;
+    padding: 1em;
     font-weight: bold;
     cursor: pointer;
     position: relative;
@@ -37,10 +37,10 @@
 
 .box-login button {
     width: 100%;
-    max-width: 20rem;
+    max-width: 100%;
     background-color: #007bff;
     color: #fff;
-    padding: 5px 10px;
+    padding: 0.75em;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -60,7 +60,8 @@
 }
 
 .box-login button:active {
-    top: 2px;
+    padding-top: 1px;
+    padding-bottom: 5px;
 }
 
 .box-login .token-info {
@@ -74,3 +75,4 @@
     font-size: 1.2rem;
     color: #dc3545;
 }
+
