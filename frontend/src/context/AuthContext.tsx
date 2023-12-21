@@ -2,6 +2,12 @@ import { createContext, useContext, ReactNode, useState } from 'react';
 import axios from 'axios';
 import { ENDPOINT } from '../config/constans';
 
+
+interface SignupResponse {
+  id: string,
+  email: string,
+  token: string
+}
 interface AuthContextProps {
   user: { email: string; id: string } | null;
   token: string | null;
@@ -16,6 +22,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<{ email: string; id: string } | null>(() => {
     const storedUser = localStorage.getItem('user');
+    console.log('Stored User:', storedUser);
     return storedUser ? JSON.parse(storedUser) : null;
   });
   const [token, setToken] = useState<string | null>(() => localStorage.getItem('token') ?? null);
@@ -39,14 +46,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const signup = async (email: string, pass: string) => {
+  const signup = async (inputEmail: string, pass: string) => {
     try {
-      const response = await axios.post(ENDPOINT.signup, { email, pass });
-      const { token, user, id } = response.data;
+      const response = await axios.post(ENDPOINT.signup, { email: inputEmail, pass });
+      const {email, id, token } = await response.data;
       setToken(token);
-      setUser({ ...user, id });
+      setUser({email, id});
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify({ ...user, id }));
+      localStorage.setItem('user', JSON.stringify({email, id}));
       setError(null);
     } catch (error) {
       console.error('Error during registration:', error);
