@@ -18,7 +18,6 @@ const UserPage: React.FC = () => {
         const response = await axios.get(ENDPOINT.favorite);
         if (setFavoriteProducts) {
           setFavoriteProducts(response.data);
-          console.log(response.data)
         }
       } catch (error) {
         console.error('Error fetching product list:', error);

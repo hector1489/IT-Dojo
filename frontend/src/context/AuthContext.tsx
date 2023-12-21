@@ -49,11 +49,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signup = async (inputEmail: string, pass: string) => {
     try {
       const response = await axios.post(ENDPOINT.signup, { email: inputEmail, pass });
-      const {email, id, token } = await response.data;
+      const { token, email, userId } = response.data;
       setToken(token);
-      setUser({email, id});
+      setUser((prevUser) => {
+        return { email, id: userId };
+      });
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify({email, id}));
+      localStorage.setItem('user', JSON.stringify({ email, userId }));
       setError(null);
     } catch (error) {
       console.error('Error during registration:', error);
